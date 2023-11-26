@@ -1,0 +1,38 @@
+:root {
+  --max-width: 100rem;
+  --border-radius: 0.8rem;
+
+  --highlight-color: #2950E0;
+  --background-color: #FBFBFB;
+  --text-color: #444;
+  --border-color: #DFDFDF;
+  --input-background-color: #FFF;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+html,
+body {
+  height: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+body {
+  font-size: 1.6rem;
+  color: var(--text-color);
+  background: var(--background-color);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
