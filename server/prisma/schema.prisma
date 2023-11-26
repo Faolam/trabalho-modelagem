@@ -1,0 +1,84 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id Int @id @default(autoincrement()) // Id do usuário no banco de dados (ID DO CLIENTE)
+
+  createdAt DateTime @default(now()) // Quando esse cliente foi criado?
+  updatedAt DateTime @updatedAt // Quando esse cliente foi atualizado?
+
+  name     String // Nome Completo do Usuário que usará a plataforma.
+  email    String @unique // Email unico de cada usuário
+  password String // Senha de acesso do usuário
+
+  addressStreet String // Nome da rua onde esse usuário mora.
+  addressNumber Int // Número da residencia desse usuário.
+  addressCity   String // Nome da cidade onde esse usuário mora.
+  addressState  String // Nome do estado onde esse usuário mora.
+  addressCountry String // Nome do país onde esse usuário mora.
+
+  permissionLevel Int @default(0) // Permissão do usuário, (0, 1) 0 == usuario, 1 == administrador
+  isLocked Boolean @default(false) // Se esse usuário ele está bloqueado
+}
+
+model Product {
+  id Int @id @default(autoincrement()) // Id do produto no banco de dados
+
+
+  brownieName String @unique // Nome do Brownie.
+  brownieCategory String // A que categoria esse brownie está referenciado
+  avarageRating Float @default(0) // Indica de 0 a 5 quantas estrelas mais ou menos esse brownie recebe normalmente.
+  amountRating Int @default(0) // Número de avaliações que esse brownie já recebeu.
+  price       Float // Preço do Brownie.
+  logoPath    String // Local onde está armazenado a imagem da logo desse brownie.
+  inStock     Int // Número de brownies desse tipo disponíveis no estoque.
+  batchValidity DateTime // Data de validade do brownie
+}
+
+model Card {
+  id Int @id @default(autoincrement()) // Id do cartão especifico.
+  userId Int // Id do usuário dono desse cartão.
+
+  cardName String // Nome do Cartão.
+  cardFlag String // Bandeira do Cartão.
+  cardNumber Int // Número do Cartão.
+  cardCVV Int // CVV do Cartão.
+  cardValidity DateTime // Data de validade do Cartão.
+}
+
+model Purchase {
+  id Int @id @default(autoincrement()) // Id da compra realizada
+  userId Int // Id do usuário que realizou a compra.
+
+  date DateTime // Data de quando a compra foi feita.
+  cost Float // Custo da compra relizada.
+  amountTypes String // Quantidade de cada tipo de brownie que foi pedida, da forma ("idBrownie,quantidade-idBrownie,quantidade.....")
+
+  sent Boolean @default(false) // Se a compra realizada já foi enviada para entrega.
+  delivered Boolean @default(false) // Se a compra já chegou no destino.
+}
+
+model Rating {
+  id Int @id @default(autoincrement()) // Id da avaliação de um usuário
+  userId Int // Id do usuário que relizou essa avaliação.
+  
+  comment String // Comentário escrito pelo usuário.
+  date DateTime // Data de quando esse comentário foi escrito.
+}
+
+model BlackList {
+  id            Int      @id @default(autoincrement()) // Id do token negado para permissão de acesso
+  invalidatedAt DateTime @default(now()) // Quando que esse token foi invalidado
+
+  userId Int // Esse token era usado por qual cliente?
+  token  String // token que foi invalidado
+}

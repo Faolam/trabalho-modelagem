@@ -1,0 +1,4 @@
+401 - autenticação incorreta, ou informações faltando
+421 - usuário bloqueado
+423 - Autenticação expirada ou houve um logout
+500 - erro no servidor
