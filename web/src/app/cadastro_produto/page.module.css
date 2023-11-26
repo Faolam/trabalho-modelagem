@@ -43,3 +43,19 @@
   border: 0.15rem solid #ccc;
   text-align: center;
 }
+
+.voltar {
+  margin-top: 2.5rem;
+  margin-left: 2.5rem;
+  display: block;
+  height: 4rem;
+  width: 10rem;
+  text-align: center;
+  padding: 0.8rem;
+  border-radius: 999rem;
+  border: 0.15rem solid #ccc;
+}
+
+.voltar:hover {
+  text-decoration: underline;
+}

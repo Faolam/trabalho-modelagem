@@ -2,10 +2,12 @@
   --max-width: 100rem;
   --border-radius: 0.8rem;
 
-  --highlight-color: #5A90CE;
+  --highlight-color: #385B9E;
   --background-color: #FBFBFB;
-  --text-color: #444;
-  --border-color: #DFDFDF;
+  --background-highlight-color: #F7F7F7;
+  --text-color: #3a3a3a;
+  --title-color: #222;
+  --border-color: #DaDaDa;
   --input-background-color: #FFF;
 }
 
@@ -33,9 +35,7 @@ body {
 }
 
 .page-header {
-  height: 16rem;
-  display: flex;
-  align-items: center;
+  margin: 6rem 0 4rem;
 }
 
 .page-title {
@@ -44,8 +44,31 @@ body {
 
 body {
   font-size: 1.6rem;
+  font-family: var(--font-inter);
   color: var(--text-color);
   background: var(--background-color);
+}
+
+button {
+  font-family: var(--font-inter);
+  font-size: 1.4rem;
+  outline: 0;
+  border: 0;
+  transition: filter 0.2s;
+}
+
+button:hover {
+  cursor: pointer;
+  filter: brightness(1.1);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--title-color);
 }
 
 a {

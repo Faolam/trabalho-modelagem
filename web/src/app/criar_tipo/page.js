@@ -2,6 +2,7 @@
 
 import { Header } from '../../ui/header';
 import { useState } from 'react';
+import Link from 'next/link';
 
 import style from "./page.module.css";
 
@@ -16,7 +17,7 @@ export default function CriarTipo() {
 
   return (
     <>
-      <Header />
+      <Link href="/cadastro" className={style.voltar}>Voltar</Link>
       <main className='main'>
         <header>
           <h1 className={style.titulo}>Criar Tipo</h1>

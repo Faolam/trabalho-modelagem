@@ -2,6 +2,7 @@
 
 import { Header } from '../../ui/header';
 import { useState } from 'react';
+import Link from 'next/link';
 
 import style from "./page.module.css";
 
@@ -27,10 +28,10 @@ export default function CadastroProduto() {
 
   return (
     <>
-      <Header />
+      <Link href="/cadastro" className={style.voltar}>Voltar</Link>
       <main className='main'>
         <header>
-          <h1 className={style.titulo}>Cadastrar Produto</h1>
+          <h1 className={style.titulo}>Alterar Produto</h1>
         </header>
         <forms className={style.form} id='formulario'>
           <label htmlFor="foto_brownie" className={style.customFileInput}> {nomeArquivo} </label><br />

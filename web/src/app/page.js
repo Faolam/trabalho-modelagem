@@ -1,7 +1,7 @@
 import { Header } from '../ui/header';
 import { BrownieList } from '../ui/brownielist';
 
-import { brownies } from '../mock/brownies';
+import { brownies } from '../mock/brownies_tipo';
 
 export default function Home() {
   return (

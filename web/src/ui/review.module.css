@@ -1,0 +1,34 @@
+.container {
+  display: flex;
+  flex-direction: row;
+  border-radius: var(--border-radius);
+  border: 1px solid var(--border-color);
+  padding: 2rem 2.5rem;
+  background: var(--background-highlight-color);
+  gap: 1.6rem;
+}
+
+.container header {
+  padding-right: 1.6rem;
+  border-right: 1px solid var(--border-color);
+  flex: 0 0 24rem;
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+.container header img {
+  object-fit: cover;
+  display: block;
+  border-radius: 100%;
+}
+
+.container header div span {
+  font-weight: 500;
+  display: block;
+}
+
+.nota {
+  margin-top: 0.4rem;
+  color: var(--highlight-color);
+}

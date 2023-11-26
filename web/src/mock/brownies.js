@@ -11,7 +11,7 @@ export const brownies = [
     "nomeBrownie": "Brownie de Nozes",
     "preco": 5,
     "quantidade": 8,
-    "caminhoLogo": "brownie.jpg"
+    "caminhoLogo": "brownie2.jpg"
   },
   {
     "tipo": "Tradicional",

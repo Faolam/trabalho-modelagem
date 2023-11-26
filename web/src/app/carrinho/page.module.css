@@ -1,0 +1,69 @@
+.div {
+  height: 50rem;
+  width: 50rem;
+  justify-content: center;
+  /* Alinha no eixo horizontal */
+  align-items: center;
+  /* Alinha no eixo vertical */
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10rem;
+  text-align: center;
+  border-radius: 1.6rem;
+  /* border: 2px solid var(--border-color) */
+  box-shadow: 0 0 30px #dfdfdf;
+}
+
+.divDentro {
+  display: flex;
+  flex-direction: column;
+  height: 50rem;
+  width: 50rem;
+  justify-content: center;
+  /* Alinha no eixo horizontal */
+  align-items: center;
+  /* Alinha no eixo vertical */
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 4rem;
+  text-align: center;
+  border: 2px solid var(--border-color);
+  background-color: var(--border-color);
+  border-bottom-left-radius: 1.6rem;
+  border-bottom-right-radius: 1.6rem;
+}
+
+.link {
+  display: inline-block;
+  padding: 1rem;
+  padding-right: auto;
+  background: var(--highlight-color);
+  color: #fff;
+  font-weight: 500;
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  border-radius: 999rem;
+  width: 25rem;
+  margin-top: 4.5rem;
+  text-align: center;
+}
+
+.paragrafo {
+  padding: 2rem;
+  width: 39rem;
+  margin-right: auto;
+  margin-left: auto;
+  border-bottom: 1.5px solid #888;
+}
+
+.paragrafoProdutos {
+  margin-top: 2rem;
+}
+
+.lastParagrafo {
+  padding: 2rem 0;
+  margin-bottom: 0.6rem;
+  width: 39rem;
+  border-top: 1.5px solid #888;
+
+}

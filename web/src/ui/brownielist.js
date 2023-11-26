@@ -9,7 +9,7 @@ export function BrownieList({ type, products }) {
       <h2 className={style.type}>{type}</h2>
       <div className={style.products}>
         {products.map(({ nomeBrownie, preco, caminhoLogo }) => (
-          <Link className={style.brownie} href="/" key={nomeBrownie}>
+          <Link className={style.brownie} href={`/produto/${nomeBrownie}`} key={nomeBrownie}>
             <Image
               src={`/${caminhoLogo}`}
               width={240}
