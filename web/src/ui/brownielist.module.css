@@ -1,0 +1,40 @@
+.container {
+  margin-bottom: 4rem;
+}
+
+.type {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+}
+
+.products {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  overflow-x: scroll;
+}
+
+.brownie {
+  display: block;
+}
+
+.brownie img {
+  display: block;
+  border-radius: var(--border-radius);
+  object-fit: cover;
+}
+
+.brownie div {
+  padding: 0.8rem 0;
+}
+
+.brownie span {
+  display: block;
+  font-size: 1.5rem;
+  margin: 0.4rem 0;
+  font-weight: 500;
+}
+
+.brownie_price {
+  color: var(--highlight-color);
+}

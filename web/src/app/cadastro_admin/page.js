@@ -5,7 +5,7 @@ import { useState } from 'react';
 
 import style from "./page.module.css";
 
-export default function Cadastro() {
+export default function CadastroAdmin() {
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
@@ -21,7 +21,7 @@ export default function Cadastro() {
       <Header />
       <main className='main'>
         <header>
-          <h1 className={style.titulo}>Cadastro</h1>
+          <h1 className={style.titulo}>Cadastro de Administrador</h1>
         </header>
         <forms className={style.form}>
           <input placeholder="Nome Completo" type='text' id='campo_nome' onChange={(e) => setNome(e.target.value)} /><br />

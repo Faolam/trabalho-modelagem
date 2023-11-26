@@ -1,0 +1,24 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 35vh;
+  /* Isso vai ocupar toda a altura da janela */
+}
+
+.titulo {
+  padding-top: 20vh;
+  text-align: center;
+}
+
+.form input {
+  border-radius: var(--border-radius);
+  width: 40rem;
+  padding: 0.8rem;
+  border: 0.15rem solid #ccc;
+}
+
+.form input[type='submit']:hover {
+  cursor: pointer;
+}

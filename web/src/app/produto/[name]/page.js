@@ -3,7 +3,10 @@ import { BrownieList } from '../ui/brownielist';
 
 import { brownies } from '../mock/brownies';
 
-export default function Home() {
+export default function Produto({ params }) {
+  const nomeBrownie = decodeURIComponent(params.name);
+  const brownie = brownies.find(b => b.nomeBrownie === nomeBrownie);
+
   return (
     <>
       <Header />

@@ -2,7 +2,7 @@
   --max-width: 100rem;
   --border-radius: 0.8rem;
 
-  --highlight-color: #2950E0;
+  --highlight-color: #5A90CE;
   --background-color: #FBFBFB;
   --text-color: #444;
   --border-color: #DFDFDF;
@@ -24,6 +24,22 @@ body {
   height: 100%;
   max-width: 100vw;
   overflow-x: hidden;
+}
+
+.main {
+  padding: 0 2.6rem;
+  margin: 0 auto;
+  max-width: var(--max-width);
+}
+
+.page-header {
+  height: 16rem;
+  display: flex;
+  align-items: center;
+}
+
+.page-title {
+  font-size: 3rem;
 }
 
 body {
