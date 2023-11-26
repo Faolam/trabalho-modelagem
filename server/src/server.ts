@@ -14,7 +14,7 @@ server.listen(port, () =>
   {
     console.clear()
     console.log(`======================================================`);
-    console.log(`--> Service: Whapper Service Web Connection           `);
+    console.log(`--> Service: Service Web Connection                   `);
     console.log(`--> Version: ${version}                               `);
     console.log(`--> Port-in: ${port}                                  `);
     console.log(`--> WebView: http://${ip}:${port}                     `);
