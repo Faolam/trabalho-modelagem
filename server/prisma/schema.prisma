@@ -50,7 +50,7 @@ model Card {
 
   cardName String // Nome do Cartão.
   cardFlag String // Bandeira do Cartão.
-  cardNumber Int // Número do Cartão.
+  cardNumber BigInt // Número do Cartão.
   cardCVV Int // CVV do Cartão.
   cardValidity DateTime // Data de validade do Cartão.
 }

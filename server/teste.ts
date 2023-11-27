@@ -1,17 +1,15 @@
 import { PrismaSession as prisma } from "./prisma/prismaClient";
-
+import moment from "moment-timezone";
 (async () => {
-  const newUser = await prisma.getSession().user.create(
+  const newUser = await prisma.getSession().card.create(
     {
       data: {
-        email: "reginaldobatista@gmail.com",
-        name: "Reginaldo Batista de Souza Gomes",
-        password: "12345",
-        addressCity: "Juíz de Fora",
-        addressCountry: "Brasil",
-        addressState: "Minas Gerais (MG)",
-        addressStreet: "Rua Rogério Morales",
-        addressNumber: 161
+        userId: 1,
+        cardCVV: 821,
+        cardValidity: moment("29/05/2024", "DD/MM/YYYY").toDate(),
+        cardFlag: "MasterCard",
+        cardName: "Reginaldo Batista de S. Gomes",
+        cardNumber: 5478488875782129
       }
     }
   );

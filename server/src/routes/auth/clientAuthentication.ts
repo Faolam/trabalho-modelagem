@@ -1,6 +1,7 @@
-import jwt from "jsonwebtoken";
 import { User } from "@prisma/client";
+import jwt, { JwtPayload } from "jsonwebtoken";
 import serverConfigs from "../../configs/server";
+import { Response, Request, NextFunction } from "express";
 import { PrismaSession as prisma } from "../../../prisma/prismaClient";
 
 interface AuthenticationResponse {
@@ -9,6 +10,10 @@ interface AuthenticationResponse {
   data: {
     token: string
   } | null;
+}
+
+interface CustomRequest extends Request {
+  userId?: string;
 }
 
 const { secret } = serverConfigs;
@@ -46,5 +51,37 @@ export class ClientAuthentication {
     let token = jwt.sign( { id: this.user.id }, secret, { expiresIn: "2h" } ); // Token possui 2 horas de validade
 
     return { status: 200, auth: true, data: { token } };
+  }
+
+  public static async isAuthorized(req: CustomRequest, res: Response, next: NextFunction) {
+    const token = req.headers['authorization'];
+
+    if (!token) return res.json({ status: 406, auth: false, data: null }).end();
+
+    try {
+      const isBlocked = await prisma.getSession().blackList.findFirst(
+        {
+          where: {
+            token: token.toString()
+          }
+        }
+      )
+
+      if (isBlocked) return res.json({ status: 419, auth: false, data: null }).end();
+    } catch(err) {
+      console.log(err);
+      return res.json({ status: 500, auth: false, data: null }).end();
+    }
+
+    jwt.verify(token, secret, (err, decoded) => 
+      {
+        if (err) return res.json({ status: 419, auth: false, data: null }).end();
+
+        const jwtPayload = decoded as JwtPayload;
+
+        req.userId = jwtPayload.id;
+        next();
+      }
+    );
   }
 }

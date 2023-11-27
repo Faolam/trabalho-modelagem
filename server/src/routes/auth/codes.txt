@@ -1,4 +1,8 @@
 401 - autenticação incorreta, ou informações faltando
+406 - token de autenticação inexistente na solicitação.
+419 - token bloqueado, usuário foi bloqueado ou foi houve logout na plataforma
 421 - usuário bloqueado
 423 - Autenticação expirada ou houve um logout
+425 - usuário não existe no banco de dados.
+426 - Não foi possivel deslogar o usuário do banco de dados.
 500 - erro no servidor
