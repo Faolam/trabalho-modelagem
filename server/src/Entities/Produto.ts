@@ -1,5 +1,10 @@
+import fs from "fs";
+import path from "path";
+import axios from "axios";
 import { Product } from "@prisma/client";
 import { PrismaSession as prisma } from "../../prisma/prismaClient";
+import { generateRandomString } from "../utils/generate.random";
+import moment from "moment-timezone";
 
 export class Produto {
   private productId: number;
@@ -29,6 +34,35 @@ export class Produto {
           },
           data: {
             [key]: newValue
+          }
+        }
+      );
+
+      return true;
+    } catch(err) {
+      return false;
+    }
+  }
+
+  public static async createProduct(brownieName: string, brownieCategory: string, image: string, price: number, inStock: number, validity: string): Promise<boolean> {
+    try {
+      // Guardando a imagem na pasta de imagens
+      const logoPath = generateRandomString(11, false);
+      const imagesPath = path.resolve(__dirname, "../images/" + logoPath + ".jpg");
+      const response = await axios.get(image, {responseType: "arraybuffer"});
+      const buffer = Buffer.from(response.data, "binary");
+      fs.writeFileSync(imagesPath, buffer);
+
+      // Criando o novo Produto no banco de dados.
+      await prisma.getSession().product.create(
+        {
+          data: {
+            batchValidity: moment(validity, "DD/MM/YYYY").toDate(),
+            brownieCategory,
+            brownieName,
+            inStock,
+            logoPath,
+            price
           }
         }
       );

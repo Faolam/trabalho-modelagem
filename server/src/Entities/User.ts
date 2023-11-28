@@ -1,5 +1,6 @@
-import { User as BdUser, Card } from "@prisma/client";
+import { User as BdUser, Card, Purchase } from "@prisma/client";
 import { PrismaSession as prisma } from "../../prisma/prismaClient";
+import { Pedido } from "./Pedido";
 
 export class User {
   /** ID do usuário no banco de dados. */
@@ -99,4 +100,12 @@ export class User {
       return false;
     }
   }
+
+  /**
+   * ***getPurchased***
+   * 
+   * @description Função que devolve todos os pedidos que o usuário relaizou nos ultimos meses.
+   * @returns Lista de pedidos realizados por esse usuário
+   */
+  public async getPurchased(): Promise<Purchase[]> { return await Pedido.getAllPedidos(this.userId); }
 }

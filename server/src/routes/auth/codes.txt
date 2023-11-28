@@ -5,4 +5,6 @@
 423 - Autenticação expirada ou houve um logout
 425 - usuário não existe no banco de dados.
 426 - Não foi possivel deslogar o usuário do banco de dados.
+431 - Sem permissão para essa solicitação
+432 - Informações faltando.
 500 - erro no servidor

@@ -9,12 +9,16 @@ export class Pedido {
     this.pedidoId = id;
   }
 
-  public async getPedido(): Promise<void> {
+  public async findPedido(): Promise<void> {
     this.purchaseBdProperties =  await prisma.getSession().purchase.findUnique({ where: {id: this.pedidoId} });
     return;
   }
 
   public getValue<T extends keyof Purchase>(key: T): Purchase[T] {
     return (this.purchaseBdProperties as Purchase)[key];
+  }
+
+  public static async getAllPedidos(userId: number): Promise<Purchase[]> {
+    return await prisma.getSession().purchase.findMany({ where: { userId } });
   }
 }

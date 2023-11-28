@@ -1,6 +1,9 @@
 import { User } from "@prisma/client";
+import { Admin } from "../../Entities/Admin";
 import jwt, { JwtPayload } from "jsonwebtoken";
+import { Cliente } from "../../Entities/Cliente";
 import serverConfigs from "../../configs/server";
+import { User as UserBD } from "../../Entities/User";
 import { Response, Request, NextFunction } from "express";
 import { PrismaSession as prisma } from "../../../prisma/prismaClient";
 
@@ -51,6 +54,10 @@ export class ClientAuthentication {
     let token = jwt.sign( { id: this.user.id }, secret, { expiresIn: "2h" } ); // Token possui 2 horas de validade
 
     return { status: 200, auth: true, data: { token } };
+  }
+
+  public static getClass(user: UserBD): Admin | Cliente {
+    return user.getValue("permissionLevel") == 1 ? new Admin(user.getValue("id")) : new Cliente(user.getValue("id"));
   }
 
   public static async isAuthorized(req: CustomRequest, res: Response, next: NextFunction) {
