@@ -6,6 +6,7 @@ import cors from "cors";
 import admin from "./routes/admin";
 import cliente from "./routes/cliente";
 import path from "path";
+import web from "./routes/web";
 
 const { port, version, ip, api } = serverConfigs;
 const server = express();
@@ -15,6 +16,8 @@ server.use(express.json());
 server.use(cors());
 
 // Recebendo as rotas do servidor
+server.use('/images', express.static(path.join(__dirname, 'images')));
+server.use(web);
 server.use(auth);
 server.use(admin);
 server.use(cliente);

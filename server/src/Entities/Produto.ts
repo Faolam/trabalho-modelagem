@@ -19,29 +19,47 @@ export class Produto {
     return;
   }
 
+  public existProduct(): boolean {
+    return this.productBdProperties ? true : false;
+  }
+
   public getValue<T extends keyof Product>(key: T): Product[T] {
     return (this.productBdProperties as Product)[key];
   }
 
-  public async updateValue<T extends keyof Product, Y extends Product[T]>(key: T, newValue: Y): Promise<boolean> {
-    if (key == "id" || key == "amountRating" || key == "avarageRating") return false;
-
+  public async updateValue(req: any): Promise<boolean> {
     try {
+
+      console.log(req.body)
+
+      const requestData = {
+        batchValidity: req.body?.batchValidity,
+        brownieCategory: req.body?.brownieCategory,
+        inStock: req.body?.inStock,
+        brownieName: req.body?.brownieName,
+        price: req.body?.price
+      };
+
+      const cleanedData = Object.fromEntries(Object.entries(requestData).filter(([_, v]) => v !== undefined && v !== null));
+
       await prisma.getSession().product.update(
         {
           where: {
             id: this.productId
           },
-          data: {
-            [key]: newValue
-          }
+          data: cleanedData
         }
       );
 
       return true;
     } catch(err) {
+      console.log(err);
       return false;
     }
+  }
+
+  public static async listAllProducts(): Promise<Product[]> {
+    return await prisma.getSession().product.findMany({});
   }
 
   public static async createProduct(brownieName: string, brownieCategory: string, image: string, price: number, inStock: number, validity: string): Promise<boolean> {

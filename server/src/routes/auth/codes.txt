@@ -7,4 +7,6 @@
 426 - Não foi possivel deslogar o usuário do banco de dados.
 431 - Sem permissão para essa solicitação
 432 - Informações faltando.
+433 - Id para pesquisa não foi encontrado
+434 - Produto inexistente.
 500 - erro no servidor
