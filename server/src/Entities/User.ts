@@ -189,6 +189,17 @@ export class User {
         );
 
         if (j) {
+          await prisma.getSession().product.update(
+            {
+              where: {
+                id: j.id
+              },
+              data: {
+                inStock: j.inStock - products[i].amount
+              }
+            }
+          );
+
           productsInfo.push({...j, amount: products[i].amount});
         } else continue;
       }
@@ -198,7 +209,7 @@ export class User {
         {
           key: server.whapper.unique_key,
           destiny: this.getValue("phone"),
-          message: `🥮 *GaBrownie Notificações*\n\n${this.getValue("name")}, você realizou uma nova compra no site hoje as ${moment().format("HH:mm")}!\n\nSeu pedido já está sendo separado para o envio, nosso prazo de entrega pode variar de *4* a *9* dias úteis, variando conforme a cidade ou estado onde você mora.\n\n🛒 *Carrinho*\n${productsInfo.map(p => `${p.amount}x${p.brownieName}`).join("\n")}\n*Subtotal = R$${cost}*\n\nPara dúvidas, consulte o *SAC 0800 833 4000*`
+          message: `🥮 *GaBrownie Notificações*\n\n${this.getValue("name")}, você realizou uma nova compra no site hoje as ${moment().format("HH:mm")}!\n\nSeu pedido já está sendo separado para o envio, nosso prazo de entrega pode variar de *4* a *9* dias úteis, variando conforme a cidade ou estado onde você mora.\n\n🛒 *Carrinho*\n${productsInfo.map(p => `${p.amount}x${p.brownieName}`).join("\n")}\n*Subtotal = R$${cost.toFixed(2)}*\n\nPara dúvidas, consulte o *SAC 0800 833 4000*`
         },
         {
           headers: {

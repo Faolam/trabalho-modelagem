@@ -46,6 +46,15 @@ model Product {
   batchValidity DateTime // Data de validade do brownie
 }
 
+model Batches {
+  id Int @id @default(autoincrement()) // Id de um lote no banco de dados, adição de lotes
+  createdAt DateTime @default(now()) // Criado em ...
+
+  productId Int // Id do produto que foi adicionado.
+  stock Int // Número de produtos adicionados nesse lote para esse produto especifico
+  batchValidity DateTime // Validade desse lote
+}
+
 model Card {
   id Int @id @default(autoincrement()) // Id do cartão especifico.
   userId Int // Id do usuário dono desse cartão.

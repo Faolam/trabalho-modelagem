@@ -25,7 +25,7 @@ import moment from "moment-timezone";
     }
   ); */
 
-  const newUser = await prisma.getSession().user.update(
+  /* const newUser = await prisma.getSession().user.update(
     {
       where: {
         id: 2
@@ -34,7 +34,8 @@ import moment from "moment-timezone";
         phone: "32998331768"
       }
     }
-  )
+  ) */
+  const newUser = await prisma.getSession().batches.findMany({});
   /* const newUser = await prisma.getSession().user.create(
     {
       data: {

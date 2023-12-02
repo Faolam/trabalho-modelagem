@@ -31,12 +31,8 @@ export class Produto {
   public async updateValue(req: any): Promise<boolean> {
     try {
 
-      console.log(req.body)
-
       const requestData = {
-        batchValidity: req.body?.batchValidity,
         brownieCategory: req.body?.brownieCategory,
-        inStock: req.body?.inStock,
         brownieName: req.body?.brownieName,
         price: req.body?.price
       };
@@ -61,8 +57,17 @@ export class Produto {
 
   public static async listAllProducts(): Promise<Product[][]> {
     try {
-      const produtos = await prisma.getSession().product.findMany({});
+      let produtos = await prisma.getSession().product.findMany({});
       const produtosCategorias: { [categoria: string]: Product[] } = {};
+
+      for (let i = 0; i < produtos.length; ++i) {
+        let lotes = await prisma.getSession().batches.findMany({where: {productId: produtos[i].id}});
+        let amount = 0;
+
+        lotes.map(lote => amount = amount + lote.stock);
+        
+        produtos[i].inStock += amount
+      }
     
       produtos.forEach((produto) => {
         const categoria = produto.brownieCategory;
@@ -82,7 +87,7 @@ export class Produto {
     }
   }
 
-  public static async createProduct(brownieName: string, brownieCategory: string, image: string, price: number, inStock: number, validity: string): Promise<boolean> {
+  public static async createProduct(brownieName: string, brownieCategory: string, image: string, price: number): Promise<boolean> {
     try {
       // Guardando a imagem na pasta de imagens
       const logoPath = generateRandomString(11, false);
@@ -95,10 +100,10 @@ export class Produto {
       await prisma.getSession().product.create(
         {
           data: {
-            batchValidity: moment(validity, "DD/MM/YYYY").toDate(),
+            batchValidity: moment().toDate(),
             brownieCategory,
             brownieName,
-            inStock,
+            inStock: 0,
             logoPath,
             price
           }
@@ -113,6 +118,18 @@ export class Produto {
 
   public static async listAllRatings(): Promise<Rating[]> {
     return await prisma.getSession().rating.findMany({});
+  }
+
+  public async addBatch(stock: number, validity: string): Promise<void> {
+    await prisma.getSession().batches.create(
+      {
+        data: {
+          batchValidity: moment(validity, "DD/MM/YYYY").toDate(),
+          productId: this.getValue("id"),
+          stock
+        }
+      }
+    );
   }
 
   public async addRating(user: User, description: string, rating: (0 | 1 | 2 | 3 | 4 | 5)): Promise<boolean> {
