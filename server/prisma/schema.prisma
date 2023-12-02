@@ -19,6 +19,7 @@ model User {
   name     String // Nome Completo do Usuário que usará a plataforma.
   email    String @unique // Email unico de cada usuário
   phone    String? // Numero de telefone é opcional
+  image    String? // Imagem do usuário
   password String // Senha de acesso do usuário
 
   addressStreet String // Nome da rua onde esse usuário mora.
@@ -71,7 +72,9 @@ model Purchase {
 model Rating {
   id Int @id @default(autoincrement()) // Id da avaliação de um usuário
   userId Int // Id do usuário que relizou essa avaliação.
-  
+  productId Int // Id do produto que foi rateado
+
+  starts Int // (1,2,3,4,5) estrelas para esse produto
   comment String // Comentário escrito pelo usuário.
   date DateTime // Data de quando esse comentário foi escrito.
 }

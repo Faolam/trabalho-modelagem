@@ -14,4 +14,12 @@ web.get(`${api}/web/listProducts`, async (req, res) =>
   }
 );
 
+web.get(`${api}/web/listRatings`, async (req, res) => 
+  {
+    const ratings = await Produto.listAllRatings();
+
+    return res.json({ status: 200, auth: true, data: ratings}).end();
+  }
+);
+
 export default web;

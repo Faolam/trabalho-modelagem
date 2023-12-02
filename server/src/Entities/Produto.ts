@@ -1,7 +1,8 @@
 import fs from "fs";
 import path from "path";
 import axios from "axios";
-import { Product } from "@prisma/client";
+import { User } from "./User";
+import { Product, Rating } from "@prisma/client";
 import { PrismaSession as prisma } from "../../prisma/prismaClient";
 import { generateRandomString } from "../utils/generate.random";
 import moment from "moment-timezone";
@@ -18,7 +19,7 @@ export class Produto {
     this.productBdProperties =  await prisma.getSession().product.findUnique({ where: {id: this.productId} });
     return;
   }
-
+  
   public existProduct(): boolean {
     return this.productBdProperties ? true : false;
   }
@@ -110,7 +111,11 @@ export class Produto {
     }
   }
 
-  public async addRating(rating: (0 | 1 | 2 | 3 | 4 | 5)): Promise<boolean> {
+  public static async listAllRatings(): Promise<Rating[]> {
+    return await prisma.getSession().rating.findMany({});
+  }
+
+  public async addRating(user: User, description: string, rating: (0 | 1 | 2 | 3 | 4 | 5)): Promise<boolean> {
     try {
       await prisma.getSession().product.update(
         {
@@ -120,6 +125,18 @@ export class Produto {
           data: {
             amountRating: this.getValue("amountRating") + 1,
             avarageRating: this.getValue("avarageRating") + (rating/(this.getValue("amountRating") + 1))
+          }
+        }
+      );
+
+      await prisma.getSession().rating.create(
+        {
+          data: {
+            comment: description,
+            productId: this.getValue("id"),
+            date: moment().toDate(),
+            starts: rating,
+            userId: user.getValue("id")
           }
         }
       );

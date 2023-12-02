@@ -3,11 +3,12 @@ import { User } from "../Entities/User";
 import serverConfigs from "../configs/server";
 import { ClientAuthentication } from "./auth/clientAuthentication";
 import { ValidateCreditCard } from "../utils/valid.credit.card";
+import { Produto } from "../Entities/Produto";
 
 const cliente = express.Router();
 const { api } = serverConfigs;
 
-cliente.post(`${api}/user/getPurchases`, ClientAuthentication.isAuthorized, async (req, res) => 
+cliente.get(`${api}/user/getPurchases`, ClientAuthentication.isAuthorized, async (req, res) => 
   {
     // Id do cliente que está acessando essa rota.
     const id = parseInt((req as any).userId) as number;
@@ -76,8 +77,45 @@ cliente.post(`${api}/user/newPurchase`, ClientAuthentication.isAuthorized, async
 
     await user.newPurchase(cost, products);
     
-    return res.json({code: true}).end();
+    return res.json(
+      { 
+        status: 200, 
+        auth: true,
+        data: null
+      }
+    );
   }
 );
+
+cliente.post(`${api}/user/newRating`, ClientAuthentication.isAuthorized, async (req, res) => 
+  {
+    // Id do cliente que está acessando essa rota.
+    const id = parseInt((req as any).userId) as number;
+    const user = new User(id);
+    await user.initializeUser();
+
+    if (!user.existsUser()) return res.json({ status: 425, auth: false, data: null }).end();
+
+    if (!req.body.productId || !req.body.description || !req.body.stars) return res.json({ status: 432, auth: false, data: null }).end();
+
+    const {productId, description, stars} = req.body;
+
+    const product = new Produto(parseInt(productId.toString()));
+    await product.getProduct();
+
+    if (!product.existProduct()) return res.json({ status: 434, auth: true, data: null }).end();
+
+    await product.addRating(user, description.toString(), parseInt(stars.toString()) as (1 | 2 | 3 | 4 | 5));
+    
+    return res.json(
+      { 
+        status: 200, 
+        auth: true,
+        data: null
+      }
+    );
+  }
+);
+
 
 export default cliente;

@@ -1,4 +1,4 @@
-import { User as BdUser, Card, Purchase } from "@prisma/client";
+import { User as BdUser, Card, Product, Purchase } from "@prisma/client";
 import { PrismaSession as prisma } from "../../prisma/prismaClient";
 import { Pedido } from "./Pedido";
 import moment from "moment-timezone";
@@ -150,16 +150,55 @@ export class User {
     }
 
     try {
+      await prisma.getSession().purchase.create(
+        {
+          data: {
+            amountTypes: customString,
+            cost,
+            date: moment().toDate(),
+            userId: this.getValue("id")
+          }
+        }
+      );
+    
       if (!this.getValue("phone")) return;
 
       const token = await axios.post(server.whapper.routes.login, {username: server.whapper.user, password: server.whapper.password}).then(info => info.data.credentials.token);
+      let productsInfo: 
+        {
+          id: number;
+          brownieName: string;
+          brownieCategory: string;
+          avarageRating: number;
+          amountRating: number;
+          price: number;
+          logoPath: string;
+          inStock: number;
+          batchValidity: Date;
+          amount: number;
+        }[]
+      = [];
+    
+      for (let i = 0; i < products.length; ++i) {
+        let j = await prisma.getSession().product.findUnique(
+          {
+            where: {
+              id: products[i].id
+            }
+          }
+        );
+
+        if (j) {
+          productsInfo.push({...j, amount: products[i].amount});
+        } else continue;
+      }
 
       await axios.post(
         server.whapper.routes.message,
         {
           key: server.whapper.unique_key,
           destiny: this.getValue("phone"),
-          message: `🥮 Obrigado por comprar na *GaBrownie*!\n\n${this.getValue("name")}, em breve seu pedido irá chegar em sua residencia e iremos avisá-lo por aqui quando ele chegar!`
+          message: `🥮 *GaBrownie Notificações*\n\n${this.getValue("name")}, você realizou uma nova compra no site hoje as ${moment().format("HH:mm")}!\n\nSeu pedido já está sendo separado para o envio, nosso prazo de entrega pode variar de *4* a *9* dias úteis, variando conforme a cidade ou estado onde você mora.\n\n🛒 *Carrinho*\n${productsInfo.map(p => `${p.amount}x${p.brownieName}`).join("\n")}\n*Subtotal = R$${cost}*\n\nPara dúvidas, consulte o *SAC 0800 833 4000*`
         },
         {
           headers: {
