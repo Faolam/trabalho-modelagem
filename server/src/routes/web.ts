@@ -6,7 +6,7 @@ import { Produto } from "../Entities/Produto";
 const web = express.Router();
 const { api } = serverConfigs;
 
-web.post(`${api}/web/listProducts`, async (req, res) => 
+web.get(`${api}/web/listProducts`, async (req, res) => 
   {
     const produtos = await Produto.listAllProducts();
 

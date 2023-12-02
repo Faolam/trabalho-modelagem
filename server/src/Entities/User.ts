@@ -2,6 +2,13 @@ import { User as BdUser, Card, Purchase } from "@prisma/client";
 import { PrismaSession as prisma } from "../../prisma/prismaClient";
 import { Pedido } from "./Pedido";
 import moment from "moment-timezone";
+import axios from "axios";
+import server from "../configs/server";
+
+interface Products {
+  id: number;
+  amount: number;
+}
 
 export class User {
   /** ID do usuário no banco de dados. */
@@ -132,5 +139,37 @@ export class User {
         }
       }
     );
+  }
+
+  public async newPurchase(cost: number, products: Products[]): Promise<void> {
+    let customString = "";
+
+    for (let i = 0; i < products.length; ++i) {
+      if (customString.length !== 0) customString += "-"
+      customString += `${products[i].id},${products[i].amount}`
+    }
+
+    try {
+      if (!this.getValue("phone")) return;
+
+      const token = await axios.post(server.whapper.routes.login, {username: server.whapper.user, password: server.whapper.password}).then(info => info.data.credentials.token);
+
+      await axios.post(
+        server.whapper.routes.message,
+        {
+          key: server.whapper.unique_key,
+          destiny: this.getValue("phone"),
+          message: `🥮 Obrigado por comprar na *GaBrownie*!\n\n${this.getValue("name")}, em breve seu pedido irá chegar em sua residencia e iremos avisá-lo por aqui quando ele chegar!`
+        },
+        {
+          headers: {
+            Authorization: token
+          }
+        }
+      );
+    } catch(err) {
+      console.log(err);
+    }
+
   }
 }

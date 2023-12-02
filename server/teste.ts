@@ -14,7 +14,7 @@ import moment from "moment-timezone";
     }
   ); */
 
-  const newUser = await prisma.getSession().product.updateMany(
+  /* const newUser = await prisma.getSession().product.updateMany(
     {
       where: {
         brownieCategory: "Frutas Vermelhas"
@@ -23,7 +23,18 @@ import moment from "moment-timezone";
         brownieCategory: "Tradicional"
       }
     }
-  );
+  ); */
+
+  const newUser = await prisma.getSession().user.update(
+    {
+      where: {
+        id: 2
+      },
+      data: {
+        phone: "32998331768"
+      }
+    }
+  )
   /* const newUser = await prisma.getSession().user.create(
     {
       data: {
