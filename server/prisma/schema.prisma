@@ -18,6 +18,7 @@ model User {
 
   name     String // Nome Completo do Usuário que usará a plataforma.
   email    String @unique // Email unico de cada usuário
+  phone    String? // Numero de telefone é opcional
   password String // Senha de acesso do usuário
 
   addressStreet String // Nome da rua onde esse usuário mora.
@@ -50,7 +51,7 @@ model Card {
 
   cardName String // Nome do Cartão.
   cardFlag String // Bandeira do Cartão.
-  cardNumber Int // Número do Cartão.
+  cardNumber BigInt // Número do Cartão.
   cardCVV Int // CVV do Cartão.
   cardValidity DateTime // Data de validade do Cartão.
 }

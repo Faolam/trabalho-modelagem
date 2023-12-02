@@ -1,7 +1,12 @@
+import serverConfigs from "./configs/server";
 import bodyParser from "body-parser";
+import auth from "./routes/auth";
 import express from "express";
 import cors from "cors";
-import serverConfigs from "./configs/server";
+import admin from "./routes/admin";
+import cliente from "./routes/cliente";
+import path from "path";
+import web from "./routes/web";
 
 const { port, version, ip, api } = serverConfigs;
 const server = express();
@@ -9,6 +14,13 @@ const server = express();
 server.use(bodyParser.json({ limit: '10mb' }));
 server.use(express.json());
 server.use(cors());
+
+// Recebendo as rotas do servidor
+server.use('/images', express.static(path.join(__dirname, 'images')));
+server.use(web);
+server.use(auth);
+server.use(admin);
+server.use(cliente);
 
 server.listen(port, () => 
   {

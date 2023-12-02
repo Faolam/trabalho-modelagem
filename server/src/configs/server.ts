@@ -8,5 +8,14 @@ export default {
   version: process.env.SERVER_VERSION as string,
   ip: process.env.SERVER_LOCATION as string,
   api: process.env.SERVER_API_ROUTE as string,
-  secret: process.env.SERVER_AUTH_TOKEN as string
+  secret: process.env.SERVER_AUTH_TOKEN as string,
+  whapper: {
+    user: process.env.WHAPPER_USER as string,
+    password: process.env.WHAPPER_PASSWORD as string,
+    unique_key: process.env.WHAPPER_UNIQUE_KEY as string,
+    routes: {
+      login: process.env.WHAPPER_LOGIN as string,
+      message: process.env.WHAPPER_MESSAGE as string
+    }
+  }
 }
