@@ -9,4 +9,5 @@
 432 - Informações faltando.
 433 - Id para pesquisa não foi encontrado
 434 - Produto inexistente.
+435 - bandeira de cartão de credito invalida
 500 - erro no servidor

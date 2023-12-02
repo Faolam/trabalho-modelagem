@@ -58,8 +58,27 @@ export class Produto {
     }
   }
 
-  public static async listAllProducts(): Promise<Product[]> {
-    return await prisma.getSession().product.findMany({});
+  public static async listAllProducts(): Promise<Product[][]> {
+    try {
+      const produtos = await prisma.getSession().product.findMany({});
+      const produtosCategorias: { [categoria: string]: Product[] } = {};
+    
+      produtos.forEach((produto) => {
+        const categoria = produto.brownieCategory;
+        if (!produtosCategorias[categoria]) {
+          produtosCategorias[categoria] = [produto];
+        } else {
+          produtosCategorias[categoria].push(produto);
+        }
+      });
+    
+      const resultado: Product[][] = Object.values(produtosCategorias);
+    
+      return resultado;
+    } catch(err) {
+      console.log(err);
+      return [];
+    }
   }
 
   public static async createProduct(brownieName: string, brownieCategory: string, image: string, price: number, inStock: number, validity: string): Promise<boolean> {

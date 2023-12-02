@@ -1,6 +1,7 @@
 import { User as BdUser, Card, Purchase } from "@prisma/client";
 import { PrismaSession as prisma } from "../../prisma/prismaClient";
 import { Pedido } from "./Pedido";
+import moment from "moment-timezone";
 
 export class User {
   /** ID do usuário no banco de dados. */
@@ -108,4 +109,28 @@ export class User {
    * @returns Lista de pedidos realizados por esse usuário
    */
   public async getPurchased(): Promise<Purchase[]> { return await Pedido.getAllPedidos(this.userId); }
+
+  /**
+   * ***insertCard***
+   * 
+   * @param cardName Nomde do Cartão
+   * @param cardNumber Número do cartão
+   * @param cardFlag Bandeira do Cartão
+   * @param cardCVV CVV do cartão
+   * @param cardValidity validade do cartão
+   */
+  public async insertCard(cardName: string, cardNumber: string, cardFlag: string, cardCVV: string, cardValidity: string): Promise<void> {
+    await prisma.getSession().card.create(
+      {
+        data: {
+          userId: this.getValue("id"),
+          cardCVV: parseInt(cardCVV),
+          cardFlag,
+          cardName,
+          cardNumber: parseInt(cardNumber),
+          cardValidity: moment(cardValidity, "DD/MM/YYYY").toDate(),
+        }
+      }
+    );
+  }
 }
