@@ -1,0 +1,122 @@
+.container {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 4rem;
+}
+
+.resumo {
+  padding: 3rem 2.2rem;
+  border-radius: var(--border-radius);
+  background: var(--background-highlight-color);
+}
+
+.resumo h2 {
+  margin-bottom: 1.2rem;
+}
+
+.data h2 {
+  margin-bottom: 2.4rem;
+}
+
+.data input {
+  outline: 0;
+  border: 0;
+  background: none;
+  font-size: 1.4rem;
+  font-family: inherit;
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0.6rem 1.2rem;
+  width: 100%;
+  height: 3.8rem;
+  border-radius: var(--border-radius);
+  border: 1px solid var(--border-color);
+  background: var(--input-background-color);
+  transition: border 0.2s;
+  margin-bottom: 1.2rem;
+}
+
+.data input:last-child {
+  margin-bottom: 2.4rem;
+}
+
+.data input::placeholder {
+  font-weight: 500;
+  font-size: 1.5rem;
+}
+
+.data input:focus {
+  border: 1px solid var(--highlight-color);
+}
+
+.finish {
+  margin-top: 1.2rem;
+  width: 100%;
+  height: 4rem;
+  font-size: 1.5rem;
+  background: var(--highlight-color);
+  border-radius: var(--border-radius);
+  color: #FFF;
+  font-weight: 500;
+}
+
+.payment {
+  background: var(--background-highlight-color);
+  padding: 1.6rem;
+  border-radius: var(--border-radius);
+  margin-bottom: 1.6rem;
+  width: 100%;
+  height: 8rem;
+}
+
+.payment:hover {
+  filter: brightness(0.95);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.6rem;
+}
+
+.titulo {
+  font-size: 2.6rem;
+  text-align: center;
+  margin-bottom: 4.2rem;
+  margin-top: 2rem;
+}
+
+.form input {
+  font-family: var(--font-inter);
+  border-radius: var(--border-radius);
+  width: 40rem;
+  padding: 0.8rem;
+  border: 1px solid #ccc;
+  margin-bottom: 1.2rem;
+}
+
+.form input::placeholder {
+  font-weight: 500;
+  font-size: 1.5rem;
+}
+
+.form input[type='submit'] {
+  margin-top: 1.2rem;
+  width: 100%;
+  height: 4rem;
+  font-size: 1.5rem;
+  background: var(--highlight-color);
+  border-radius: var(--border-radius);
+  color: #FFF;
+  font-weight: 500;
+  font-family: var(--font-inter);
+  font-size: 1.5rem;
+  outline: 0;
+}
+
+.form input[type='submit']:hover {
+  cursor: pointer;
+}

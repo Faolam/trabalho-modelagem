@@ -1,0 +1,52 @@
+.link {
+  display: inline-block;
+  padding: 0.6rem;
+  padding-right: auto;
+  background: var(--highlight-color);
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  border-radius: 999rem;
+  width: 10rem;
+  margin-top: 1.2rem;
+  text-align: center;
+}
+
+.infoPeriodo {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 2rem;
+}
+
+.infoPeriodo strong {
+  border-radius: 0.8rem;
+  border: 1px solid #888;
+  padding: 1rem 1.8rem;
+}
+
+.infoPeriodo strong span {
+  color: var(--highlight-color);
+}
+
+.periodo span {
+  margin-right: 1rem;
+  /*border: 1px solid '#fff';*/
+}
+
+.periodo span:nth-child(3) {
+  margin-left: 3rem;
+}
+
+.periodo input {
+  font-family: var(--font-inter);
+  font-size: 1.6rem;
+  background: 0;
+  transition: filter 0.2s;
+}
+
+.form {
+  border: 1px solid '#000';
+}

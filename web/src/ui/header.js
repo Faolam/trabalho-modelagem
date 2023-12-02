@@ -12,9 +12,9 @@ export function Header({ prev_query = '' }) {
         <SearchBar prev_query={prev_query} />
         <nav className={style.nav}>
           <ul>
-            <li><Link href="/">Pedidos</Link></li>
-            <li><Link href="/">Carrinho</Link></li>
-            <li><Link href="/">Login</Link></li>
+            <li><Link href="/pedidos">Pedidos</Link></li>
+            <li><Link href="/carrinho">Carrinho</Link></li>
+            <li><Link href="/login">Login</Link></li>
           </ul>
         </nav>
       </div>

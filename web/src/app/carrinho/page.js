@@ -23,7 +23,7 @@ export default function Carrinho() {
         <header>
         </header>
         <div className={style.div}>
-          <Link href='/login' className={style.link}>Fazer Pedido</Link>
+          <Link href='/fechar-pedido' className={style.link}>Fazer Pedido</Link>
           <div className={style.divDentro}>
             <div style={{ flex: 1 }}>
               <p className={style.paragrafo}>Resumo do Pedido</p>

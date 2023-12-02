@@ -5,14 +5,14 @@
   z-index: 1000;
   display: flex;
   justify-content: center;
+  background: var(--background-highlight-color);
   border-bottom: 1px solid var(--border-color);
-  background: var(--background-color);
 }
 
 .content {
   width: 100%;
   max-width: calc(var(--max-width) + 22rem);
-  height: 6rem;
+  height: 6.6rem;
   display: grid;
   grid-template-columns: 1fr 1.4fr 1fr;
   align-items: center;
@@ -32,12 +32,11 @@
 }
 
 .nav ul li a {
-  opacity: 0.7;
-  transition: opacity 0.2s;
+  transition: color 0.2s;
   font-size: 1.4rem;
   font-weight: 500;
 }
 
 .nav ul li a:hover {
-  opacity: 1;
+  color: var(--highlight-color);
 }

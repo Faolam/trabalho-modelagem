@@ -1,0 +1,29 @@
+.pedidos {
+  display: grid;
+  gap: 2rem;
+  margin-bottom: 2rem;
+  grid-template-columns: repeat(auto-fill, minmax(22rem, 1fr));
+}
+
+.pedido {
+  background: var(--background-highlight-color);
+  border-radius: var(--border-radius);
+  padding: 2rem;
+  text-align: left;
+}
+
+.pedido:hover {
+  filter: brightness(0.95);
+}
+
+.pedido div {
+  font-size: 1.4rem;
+}
+
+.pedido_info {
+  margin-top: 2rem;
+}
+
+.modalContent {
+  width: 80rem;
+}

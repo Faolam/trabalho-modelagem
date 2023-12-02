@@ -3,10 +3,11 @@
   --border-radius: 0.8rem;
 
   --highlight-color: #385B9E;
-  --background-color: #FBFBFB;
-  --background-highlight-color: #F7F7F7;
-  --text-color: #3a3a3a;
-  --title-color: #222;
+  --background-color: #FDFDFE;
+  --background-highlight-color: #f6f6f8;
+  --background-intense-highlight-color: #dddddf;
+  --text-color: #3a3c48;
+  --title-color: #1d1e24;
   --border-color: #DaDaDa;
   --input-background-color: #FFF;
 }
@@ -35,7 +36,7 @@ body {
 }
 
 .page-header {
-  margin: 6rem 0 4rem;
+  margin: 6rem 0;
 }
 
 .page-title {
@@ -51,9 +52,10 @@ body {
 
 button {
   font-family: var(--font-inter);
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   outline: 0;
   border: 0;
+  background: 0;
   transition: filter 0.2s;
 }
 

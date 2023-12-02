@@ -44,13 +44,13 @@ export default function Produto({ params }) {
               <button type="button" className={style.carrinho}>ADICIONAR AO CARRINHO</button>
             </div>
           </div>
-          <div className={style.reviews_container}>
-            <header><span>Avaliações {'(58)'}</span></header>
-            <div className={style.reviews}>
-              {avaliacoes.map(({ foto, nome, nota, descricao }) => <Review foto={foto} nome={nome} nota={nota} descricao={descricao} />)}
-            </div>
-          </div>
         </header>
+        <div className={style.reviews_container}>
+          <header><span>Avaliações {'(58)'}</span></header>
+          <div className={style.reviews}>
+            {avaliacoes.map(({ foto, nome, nota, descricao }) => <Review foto={foto} nome={nome} nota={nota} descricao={descricao} />)}
+          </div>
+        </div>
       </main>
     </>
   )
