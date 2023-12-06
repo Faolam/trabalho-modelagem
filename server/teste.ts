@@ -1,6 +1,15 @@
 import { PrismaSession as prisma } from "./prisma/prismaClient";
 import moment from "moment-timezone";
+import { generateRandomString } from "./src/utils/generate.random";
+import path from "path";
+import fs from "fs";
+import axios from "axios";
 (async () => {
+  /* const logoPath = generateRandomString(11, false);
+  const imagesPath = path.resolve(__dirname, "./src/images/" + logoPath + ".jpg");
+  const response = await axios.get("https://www.forestcom.com.br/wp-content/uploads/2018/09/blank-profile-picture-973460_640.png", {responseType: "arraybuffer"});
+  const buffer = Buffer.from(response.data, "binary");
+  fs.writeFileSync(imagesPath, buffer); */
   /* const newUser = await prisma.getSession().card.create(
     {
       data: {

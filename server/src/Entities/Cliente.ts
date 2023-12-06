@@ -17,6 +17,7 @@ export class Cliente extends User {
             password, 
             phone,
             email,
+            image: "biuobyK2uYN",
             addressCity: "",
             addressCountry: "",
             addressNumber: 0,
