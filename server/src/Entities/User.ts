@@ -4,6 +4,9 @@ import { Pedido } from "./Pedido";
 import moment from "moment-timezone";
 import axios from "axios";
 import server from "../configs/server";
+import { generateRandomString } from "../utils/generate.random";
+import path from "path";
+import fs from "fs";
 
 interface Products {
   id: number;
@@ -220,6 +223,33 @@ export class User {
       }
     );
     return;
+  }
+
+  public async setPicture(picture: string): Promise<boolean> {
+    try {
+      // Guardando a imagem na pasta de imagens
+      const logoPath = generateRandomString(11, false);
+      const imagesPath = path.resolve(__dirname, "../images/" + logoPath + ".jpg");
+      const response = await axios.get(picture, {responseType: "arraybuffer"});
+      const buffer = Buffer.from(response.data, "binary");
+      fs.writeFileSync(imagesPath, buffer);
+
+      // Criando o novo Produto no banco de dados.
+      await prisma.getSession().user.update(
+        {
+          where: {
+            id: this.getValue("id")
+          },
+          data: {
+            image: logoPath
+          }
+        }
+      );
+
+      return true;
+    } catch(err) {
+      return false;
+    }
   }
 
   /**

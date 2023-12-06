@@ -104,11 +104,11 @@ cliente.post(`${api}/user/profilePicture`, ClientAuthentication.isAuthorized, as
 
     if (!user.existsUser()) return res.json({ status: 425, auth: false, data: null }).end();
 
-    if (!req.body.cost || !req.body.products) return res.json({ status: 432, auth: false, data: null }).end();
+    if (!req.body.picture) return res.json({ status: 432, auth: false, data: null }).end();
 
-    const {cost, products} = req.body;
+    const {picture} = req.body;
 
-    await user.newPurchase(cost, products);
+    await user.setPicture(picture.toString());
     
     return res.json(
       { 

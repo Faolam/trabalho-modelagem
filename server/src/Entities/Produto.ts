@@ -132,9 +132,22 @@ export class Produto {
     );
   }
 
-  public static async findProductByName(name: string): Promise<Product[] | null> {
+  public static async findProductByName(name: string): Promise<any | null> {
     try {
-      return await prisma.getSession().product.findMany({ where: {brownieName: {startsWith: name}} });
+      const product = await prisma.getSession().product.findMany({ where: {brownieName: {startsWith: name}} });
+
+      if (!product.length) return null
+
+      let ratingsNew: {}[] = [];
+      const ratings = await prisma.getSession().rating.findMany({where: {productId: product[0].id }});
+
+      for (let i = 0; i < ratings.length; ++i) {
+        const user = await prisma.getSession().user.findUnique({where: {id: ratings[i].userId}});
+
+        ratingsNew.push({ ...ratings[i], userName: user?.name, userImage: user?.image });
+      }
+
+      return {...product[0], ratings: ratingsNew};
     } catch(err) {
       console.log(err);
       return null;
