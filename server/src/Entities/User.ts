@@ -1,4 +1,4 @@
-import { User as BdUser, Card, Product, Purchase } from "@prisma/client";
+import { User as BdUser, Card, Product, Purchase, Rating } from "@prisma/client";
 import { PrismaSession as prisma } from "../../prisma/prismaClient";
 import { Pedido } from "./Pedido";
 import moment from "moment-timezone";
@@ -115,7 +115,41 @@ export class User {
    * @description Função que devolve todos os pedidos que o usuário relaizou nos ultimos meses.
    * @returns Lista de pedidos realizados por esse usuário
    */
-  public async getPurchased(): Promise<Purchase[]> { return await Pedido.getAllPedidos(this.userId); }
+  public async getPurchased(): Promise<{purchase: Purchase, brownieTypes: {amount: number, brownie: Product, ratings: Rating[]}[]}[]> { 
+    try {
+      const pedidos = await Pedido.getAllPedidos(this.userId);
+      const response: {purchase: Purchase, brownieTypes: {amount: number, brownie: Product, ratings: Rating[]}[]}[] = [];
+
+      for (let p = 0; p < pedidos.length; ++p) {
+        let pedido = pedidos[p];
+        let amontTypes: string[] = [];
+        const brwQnt: {amount: number, brownie: Product, ratings: Rating[]}[] = []; // Novo array para cada pedido
+
+        if (pedido.amountTypes.includes("-")) {
+          amontTypes = pedido.amountTypes.split("-");
+        } else {
+          amontTypes = [pedido.amountTypes];
+        }
+
+        for (let j = 0; j < amontTypes.length; ++j) {
+          const product = await prisma.getSession().product.findUnique({where: {id: parseInt(amontTypes[j].split(",")[0])}});
+
+          if (!product) continue;
+
+          const ratings = await prisma.getSession().rating.findMany({where: {productId: parseInt(amontTypes[j].split(",")[0]) }});
+
+          brwQnt.push({amount: parseInt(amontTypes[j].split(",")[1]), brownie: product, ratings: ratings})
+        }
+
+        response.push({purchase: pedido, brownieTypes: brwQnt});
+      }
+
+      return response;
+    } catch(err) {
+      console.log(err);
+      return [];
+    }
+  }
 
   /**
    * ***insertCard***

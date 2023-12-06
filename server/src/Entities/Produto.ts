@@ -139,8 +139,6 @@ export class Produto {
       console.log(err);
       return null;
     }
-    
-    return null;
   }
 
   public async addRating(user: User, description: string, rating: (0 | 1 | 2 | 3 | 4 | 5)): Promise<boolean> {
