@@ -1,4 +1,4 @@
-import { User } from "@prisma/client";
+import { Card, User } from "@prisma/client";
 import { Admin } from "../../Entities/Admin";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import { Cliente } from "../../Entities/Cliente";
@@ -6,12 +6,20 @@ import serverConfigs from "../../configs/server";
 import { User as UserBD } from "../../Entities/User";
 import { Response, Request, NextFunction } from "express";
 import { PrismaSession as prisma } from "../../../prisma/prismaClient";
+import moment from "moment-timezone";
 
 interface AuthenticationResponse {
   status: number,
   auth: boolean,
   data: {
     user: User,
+    cards: {
+      name: string;
+      flag: string; 
+      number: string;
+      cvv: number; 
+      validityYear: string
+    }[]
     token: string
   } | null;
 }
@@ -47,17 +55,25 @@ export class ClientAuthentication {
     }
   }
 
-  public getAuth(): AuthenticationResponse {
+  public async getAuth(): Promise<AuthenticationResponse> {
     if (!this.user) return {status: 401, auth: false, data: null};
     if (this.user.isLocked) return {status: 421, auth: false, data: null};
+
+    const userClass = new UserBD(this.user.id);
+    await userClass.initializeUser();
+
+    console.log("aut")
 
     // Token de Authenticação Gerado para 2Horas
     let token = jwt.sign( { id: this.user.id }, secret, { expiresIn: "2h" } ); // Token possui 2 horas de validade
 
     let userBd = this.user;
     userBd.password = "F";
+    console.log("aut")
 
-    return { status: 200, auth: true, data: { token, user: userBd } };
+    const cards = (await userClass.getCards()).map(card => ({name: card.cardName,flag: card.cardFlag, number: BigInt(card.cardNumber).toString(), cvv: card.cardCVV, validityYear: moment(card.cardValidity).format("YYYY")}));
+
+    return { status: 200, auth: true, data: {  token, user: userBd, cards } };
   }
 
   public static getClass(user: UserBD): Admin | Cliente {

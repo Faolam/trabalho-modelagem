@@ -20,7 +20,7 @@ auth.post(`${api}/login`, async (req, res) =>
     const authentication = new ClientAuthentication(email, password);
     await authentication.initializeUser();
 
-    return res.json(authentication.getAuth()).end();
+    return res.json(await authentication.getAuth()).end();
   }
 );
 
