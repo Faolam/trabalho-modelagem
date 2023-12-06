@@ -25,6 +25,15 @@ import moment from "moment-timezone";
     }
   ); */
 
+  const newUser = await prisma.getSession().user.findMany({});
+  /* const newUser = await prisma.getSession().batches.findMany({}); */
+  /* const newUser = await prisma.getSession().user.create(
+    {
+      data: {
+        addressCity: "Niterói",
+        addressCountry: "Brasil",
+        addressNumber: 200,
+        addressState: "Rio de Janeiro (RJ)",
         addressStreet: "R. Dr. Luís de Araújo Braz, 199-25 - Serra Grande",
         email: "pedro.alcenio@estudante.ufjf.br",
         name: "Pedro Henrique Gomes Alcenio",
