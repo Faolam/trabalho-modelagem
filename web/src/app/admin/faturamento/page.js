@@ -1,6 +1,6 @@
 "use client"
 
-import { Header } from '../../ui/header';
+import { Header } from '../../../ui/header';
 import { useState } from 'react';
 import Link from 'next/link';
 
@@ -14,7 +14,7 @@ export default function Faturamento() {
       <main className='main'>
         <header className="page-header">
           <h1 className="page-title">Faturamento</h1>
-          <Link href="/cadastro" className={style.link}>Voltar</Link>
+          <Link href="/admin/home" className={style.link}>Voltar</Link>
           <div className={style.infoPeriodo}>
             <div className={style.periodo}>
               <span>Início do período</span>

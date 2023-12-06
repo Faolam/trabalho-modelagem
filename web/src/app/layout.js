@@ -1,5 +1,7 @@
-import { Inter } from 'next/font/google'
 import '../ui/global.css'
+
+import { Inter } from 'next/font/google';
+import { AuthProvider } from '@/contexts/auth';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -15,7 +17,11 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="pt-br" className={inter.variable}>
-      <body>{children}</body>
+      <body>
+        <AuthProvider>
+          {children}
+        </AuthProvider>
+      </body>
     </html>
   )
 }

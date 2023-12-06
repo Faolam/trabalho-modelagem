@@ -1,0 +1,106 @@
+.link,
+.lote {
+  display: inline-block;
+  padding: 0.6rem 2rem;
+  background: var(--highlight-color);
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  border-radius: 999rem;
+  margin-top: 1.2rem;
+  text-align: center;
+  margin-right: 1rem;
+}
+
+.lote {
+  padding: 1rem 2rem;
+  display: inline;
+  width: auto;
+  margin: 0;
+  border-radius: var(--border-radius);
+}
+
+.brownies {
+  display: grid;
+  gap: 2rem;
+  margin-bottom: 4rem;
+  grid-template-columns: repeat(auto-fill, minmax(22rem, 1fr));
+}
+
+.brownie {
+  display: flex;
+  flex-direction: column;
+}
+
+.brownieInfo {
+  width: 100%;
+  flex: 1;
+  padding: 1.6rem;
+  text-align: left;
+  font-size: 1.4rem;
+  border-radius: 0 0 var(--border-radius) var(--border-radius);
+  background: var(--background-highlight-color);
+}
+
+.imgContainer {
+  width: 100%;
+  position: relative;
+  height: 12rem;
+}
+
+.imgContainer img {
+  border-radius: var(--border-radius) var(--border-radius) 0 0;
+}
+
+.brownie:hover {
+  filter: brightness(0.98);
+}
+
+.modalContent {
+  width: 80rem;
+}
+
+.brownieEdit,
+.brownieDelete {
+  margin-right: 0.8rem;
+  padding: 0.4rem 0.3rem;
+  padding-right: auto;
+  color: var(--highlight-color);
+  font-weight: 500;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  border-radius: 0.6rem;
+  margin-top: 1rem;
+  text-align: center;
+  background: var(--background-highlight-color);
+}
+
+.brownieDelete {
+  color: #a44;
+}
+
+.brownieEdit:hover,
+.brownieDelete:hover {
+  filter: brightness(0.96);
+}
+
+.loteContainer {
+  margin-top: 1.6rem;
+  border-top: 1px solid var(--border-color);
+  padding-top: 1.6rem;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.inputLabel {
+  font-size: 1.4rem;
+  height: 5.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 0.4rem;
+  background: var(--background-highlight-color);
+  border-radius: 0.4rem;
+}

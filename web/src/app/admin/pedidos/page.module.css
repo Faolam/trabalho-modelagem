@@ -1,0 +1,44 @@
+.goBack {
+  display: block;
+  padding: 0.6rem;
+  padding-right: auto;
+  background: var(--highlight-color);
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  border-radius: 999rem;
+  width: 8rem;
+  margin-top: 1.2rem;
+  text-align: center;
+}
+
+.pedidos {
+  display: grid;
+  gap: 2rem;
+  margin-bottom: 2rem;
+  grid-template-columns: repeat(auto-fill, minmax(22rem, 1fr));
+}
+
+.pedido {
+  background: var(--background-highlight-color);
+  border-radius: var(--border-radius);
+  padding: 2rem;
+  text-align: left;
+}
+
+.pedido:hover {
+  filter: brightness(0.95);
+}
+
+.pedido div {
+  font-size: 1.4rem;
+}
+
+.pedido_info {
+  margin-top: 2rem;
+}
+
+.modalContent {
+  width: 80rem;
+}

@@ -1,6 +1,5 @@
 "use client"
 
-import { Header } from '../../ui/header';
 import { useState } from 'react';
 import Link from 'next/link';
 
@@ -28,10 +27,10 @@ export default function CadastroProduto() {
 
   return (
     <>
-      <Link href="/cadastro" className={style.voltar}>Voltar</Link>
+      <Link href="/admin/produtos" className={style.voltar}>Voltar</Link>
       <main className='main'>
         <header>
-          <h1 className={style.titulo}>Alterar Produto</h1>
+          <h1 className={style.titulo}>Cadastrar Produto</h1>
         </header>
         <forms className={style.form} id='formulario'>
           <label htmlFor="foto_brownie" className={style.customFileInput}> {nomeArquivo} </label><br />
@@ -46,7 +45,7 @@ export default function CadastroProduto() {
 
           <input placeholder="Nome do Brownie" type='text' id='campo_nome' onChange={(e) => setNome(e.target.value)} /><br />
           <input placeholder="Preço" type='text' id='campo_preco' onChange={(e) => setPreco(e.target.value)} /><br />
-          <input value="Alterar" type='submit' onClick={(e) => enviar()} /><br />
+          <input value="Cadastrar Brownie" type='submit' onClick={(e) => enviar()} /><br />
         </forms>
       </main>
     </>

@@ -1,6 +1,6 @@
 "use client"
 
-import { Header } from '../../ui/header';
+import { Header } from '../../../ui/header';
 import { useState } from 'react';
 import Link from 'next/link';
 

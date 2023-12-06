@@ -1,6 +1,5 @@
 "use client"
 
-import { Header } from '../../ui/header';
 import { useState } from 'react';
 import Link from 'next/link';
 
@@ -17,7 +16,7 @@ export default function CriarTipo() {
 
   return (
     <>
-      <Link href="/cadastro" className={style.voltar}>Voltar</Link>
+      <Link href="/admin/produtos" className={style.voltar}>Voltar</Link>
       <main className='main'>
         <header>
           <h1 className={style.titulo}>Criar Tipo</h1>

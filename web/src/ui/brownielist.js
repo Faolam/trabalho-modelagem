@@ -8,17 +8,17 @@ export function BrownieList({ type, products }) {
     <div className={style.container}>
       <h2 className={style.type}>{type}</h2>
       <div className={style.products}>
-        {products.map(({ nomeBrownie, preco, caminhoLogo }) => (
-          <Link className={style.brownie} href={`/produto/${nomeBrownie}`} key={nomeBrownie}>
+        {products.map(({ brownieName, price, logoPath }) => (
+          <Link className={style.brownie} href={`/produto/${brownieName}`} key={brownieName}>
             <Image
-              src={`/${caminhoLogo}`}
+              src={`${process.env.NEXT_PUBLIC_IMAGES_PATH}/${logoPath}.jpg`}
               width={240}
               height={160}
-              alt={nomeBrownie}
+              alt={brownieName}
             />
             <div>
-              <span>{nomeBrownie}</span>
-              <span className={style.brownie_price}>R$ {preco}</span>
+              <span>{brownieName}</span>
+              <span className={style.brownie_price}>R$ {price}</span>
             </div>
           </Link>
         ))}

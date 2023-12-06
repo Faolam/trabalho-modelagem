@@ -1,19 +1,28 @@
 "use client"
 
 import { Header } from '../../ui/header';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import Link from 'next/link';
 
 import style from "./page.module.css";
+import { AuthContext } from '@/contexts/auth';
+import { useRouter } from 'next/navigation';
 
 export default function Carrinho() {
+  const router = useRouter();
   const [nomeProduto, setNomeProduto] = useState('CyberBrownie2077');
   const [quantidadeProduto, setQuantidadeProduto] = useState('40');
   const [custoTotal, setCustoTotal] = useState('2077.00');
 
-  function enviar() {
-    let texto = "Nome: " + nome
-    alert(texto)
+  const { user } = useContext(AuthContext);
+
+  function handleProceed() {
+    if (user) {
+      router.push('/fechar-pedido');
+    }
+    else {
+      router.push('/login')
+    }
   }
 
   return (
@@ -23,7 +32,7 @@ export default function Carrinho() {
         <header>
         </header>
         <div className={style.div}>
-          <Link href='/fechar-pedido' className={style.link}>Fazer Pedido</Link>
+          <button type="button" onClick={handleProceed} className={style.link}>Fazer Pedido</button>
           <div className={style.divDentro}>
             <div style={{ flex: 1 }}>
               <p className={style.paragrafo}>Resumo do Pedido</p>
