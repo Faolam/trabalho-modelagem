@@ -4,6 +4,7 @@ import serverConfigs from "../configs/server";
 import { ClientAuthentication } from "./auth/clientAuthentication";
 import { ValidateCreditCard } from "../utils/valid.credit.card";
 import { Produto } from "../Entities/Produto";
+import { Cliente } from "../Entities/Cliente";
 
 const cliente = express.Router();
 const { api } = serverConfigs;
@@ -84,6 +85,63 @@ cliente.post(`${api}/user/newPurchase`, ClientAuthentication.isAuthorized, async
         data: null
       }
     );
+  }
+);
+
+cliente.post(`${api}/user/profilePicture`, ClientAuthentication.isAuthorized, async (req, res) => 
+  {
+    // Id do cliente que está acessando essa rota.
+    const id = parseInt((req as any).userId) as number;
+    const user = new User(id);
+    await user.initializeUser();
+
+    if (!user.existsUser()) return res.json({ status: 425, auth: false, data: null }).end();
+
+    if (!req.body.cost || !req.body.products) return res.json({ status: 432, auth: false, data: null }).end();
+
+    const {cost, products} = req.body;
+
+    await user.newPurchase(cost, products);
+    
+    return res.json(
+      { 
+        status: 200, 
+        auth: true,
+        data: null
+      }
+    );
+  }
+);
+
+cliente.post(`${api}/user/newUser`, async (req, res) => 
+  {
+    if (!req.body.name || !req.body.email || !req.body.phone || !req.body.password) return res.json({ status: 432, auth: false, data: null }).end();
+
+    const {name, email, phone, password} = req.body;
+
+    if (typeof name !== "string") return res.json({ status: 436, auth: false, data: null }).end();
+    if (typeof email !== "string") return res.json({ status: 436, auth: false, data: null }).end();
+    if (typeof phone !== "string") return res.json({ status: 436, auth: false, data: null }).end();
+    if (typeof password !== "string") return res.json({ status: 436, auth: false, data: null }).end();
+
+    if (!password.length) return res.json({ status: 436, auth: false, data: null }).end();
+    if (!name.length) return res.json({ status: 436, auth: false, data: null }).end();
+    if (!phone.length) return res.json({ status: 436, auth: false, data: null }).end();
+    if (!email.length) return res.json({ status: 436, auth: false, data: null }).end();
+
+    const client = await Cliente.createClient(name, email, phone, password);
+
+    if (client) {
+      return res.json(
+        { 
+          status: 200, 
+          auth: true,
+          data: null
+        }
+      );
+    } else {
+      return res.json({ status: 500, auth: false, data: null }).end();
+    }
   }
 );
 

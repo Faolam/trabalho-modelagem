@@ -141,6 +141,12 @@ export class User {
     );
   }
 
+  /**
+   * ***newPurchase***
+   * @param cost custo da compra
+   * @param products produtos comprados
+   * @returns void
+   */
   public async newPurchase(cost: number, products: Products[]): Promise<void> {
     let customString = "";
 

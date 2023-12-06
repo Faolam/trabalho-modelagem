@@ -11,6 +11,7 @@ interface AuthenticationResponse {
   status: number,
   auth: boolean,
   data: {
+    user: User,
     token: string
   } | null;
 }
@@ -53,7 +54,10 @@ export class ClientAuthentication {
     // Token de Authenticação Gerado para 2Horas
     let token = jwt.sign( { id: this.user.id }, secret, { expiresIn: "2h" } ); // Token possui 2 horas de validade
 
-    return { status: 200, auth: true, data: { token } };
+    let userBd = this.user;
+    userBd.password = "F";
+
+    return { status: 200, auth: true, data: { token, user: userBd } };
   }
 
   public static getClass(user: UserBD): Admin | Cliente {
