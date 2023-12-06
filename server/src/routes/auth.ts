@@ -47,7 +47,7 @@ auth.get(`${api}/user/info`, ClientAuthentication.isAuthorized, async (req, res)
           city: user.getValue("addressCity"),
           street: user.getValue("addressStreet"),
           state: user.getValue("addressState"),
-          cards: (await user.getCards()).map(card => ({name: card.cardName,flag: card.cardFlag, number: card.cardNumber, cvv: card.cardCVV, validityYear: moment(card.cardValidity).format("YYYY")}))
+          cards: (await user.getCards()).map(card => ({name: card.cardName,flag: card.cardFlag, number: BigInt(card.cardNumber).toString(), cvv: card.cardCVV, validityYear: moment(card.cardValidity).format("YYYY")}))
         }
       }
     ).end();
