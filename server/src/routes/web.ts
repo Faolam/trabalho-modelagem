@@ -22,4 +22,15 @@ web.get(`${api}/web/listRatings`, async (req, res) =>
   }
 );
 
+web.get(`${api}/web/findProduct`, async (req, res) => 
+  {
+    if (!req.body.name) return res.json({ status: 432, auth: false, data: null }).end();
+
+    const findedProduct = await Produto.findProductByName(req.body.name.toString());
+
+    return res.json({ status: 200, auth: true, data: findedProduct}).end();
+  }
+);
+
+
 export default web;

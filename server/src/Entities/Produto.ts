@@ -132,6 +132,17 @@ export class Produto {
     );
   }
 
+  public static async findProductByName(name: string): Promise<Product[] | null> {
+    try {
+      return await prisma.getSession().product.findMany({ where: {brownieName: {startsWith: name}} });
+    } catch(err) {
+      console.log(err);
+      return null;
+    }
+    
+    return null;
+  }
+
   public async addRating(user: User, description: string, rating: (0 | 1 | 2 | 3 | 4 | 5)): Promise<boolean> {
     try {
       await prisma.getSession().product.update(
