@@ -62,14 +62,11 @@ export class ClientAuthentication {
     const userClass = new UserBD(this.user.id);
     await userClass.initializeUser();
 
-    console.log("aut")
-
     // Token de Authenticação Gerado para 2Horas
     let token = jwt.sign( { id: this.user.id }, secret, { expiresIn: "2h" } ); // Token possui 2 horas de validade
 
     let userBd = this.user;
     userBd.password = "F";
-    console.log("aut")
 
     const cards = (await userClass.getCards()).map(card => ({name: card.cardName,flag: card.cardFlag, number: BigInt(card.cardNumber).toString(), cvv: card.cardCVV, validityYear: moment(card.cardValidity).format("YYYY")}));
 

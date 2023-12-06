@@ -5,9 +5,10 @@ import { ClientAuthentication } from "./auth/clientAuthentication";
 import { ValidateCreditCard } from "../utils/valid.credit.card";
 import { Produto } from "../Entities/Produto";
 import { Cliente } from "../Entities/Cliente";
+import axios from "axios";
 
 const cliente = express.Router();
-const { api } = serverConfigs;
+const { api, port, ip } = serverConfigs;
 
 cliente.get(`${api}/user/getPurchases`, ClientAuthentication.isAuthorized, async (req, res) => 
   {
@@ -72,9 +73,15 @@ cliente.post(`${api}/user/newPurchase`, ClientAuthentication.isAuthorized, async
 
     if (!user.existsUser()) return res.json({ status: 425, auth: false, data: null }).end();
 
-    if (!req.body.cost || !req.body.products) return res.json({ status: 432, auth: false, data: null }).end();
+    if (!req.body.cardName || !req.body.cardValidity || !req.body.cardNumber || !req.body.cardCVV || !req.body.country || !req.body.street || !req.body.number || !req.body.state || !req.body.city || !req.body.cost || !req.body.products) return res.json({ status: 432, auth: false, data: null }).end();
 
-    const {cost, products} = req.body;
+    const {country, street, number, state, city, cardName, cardValidity, cardNumber, cardCVV, cost, products} = req.body;
+
+    const updateCard = await axios.post(`http://${ip}:${port}${api}/user/newCard`, {cardName, cardValidity, cardNumber, cardCVV}, {headers: {"authorization": req.headers['authorization']}}).catch(err => {console.log(err); return {data: {status: 500}}});
+
+    if (updateCard.data.status !== 200) return res.json({ status: 435, auth: false, data: null }).end();
+
+    await user.updateAddress(country, street, parseInt(number), state, city);
 
     await user.newPurchase(cost, products);
     

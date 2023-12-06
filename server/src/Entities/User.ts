@@ -161,18 +161,65 @@ export class User {
    * @param cardValidity validade do cartão
    */
   public async insertCard(cardName: string, cardNumber: string, cardFlag: string, cardCVV: string, cardValidity: string): Promise<void> {
-    await prisma.getSession().card.create(
+    const existCard = await prisma.getSession().card.findUnique({where: {id: 0}});
+    if (!existCard) {
+      await prisma.getSession().card.create(
+        {
+          data: {
+            userId: this.getValue("id"),
+            cardCVV: parseInt(cardCVV),
+            cardFlag,
+            cardName,
+            cardNumber: parseInt(cardNumber),
+            cardValidity: moment(cardValidity, "DD/MM/YYYY").toDate(),
+          }
+        }
+      );
+    } else {
+      await prisma.getSession().card.update(
+        {
+          where: {
+            id: 0
+          },
+          data: {
+            cardCVV: parseInt(cardCVV),
+            cardFlag,
+            cardName,
+            cardNumber: parseInt(cardNumber),
+            cardValidity: moment(cardValidity, "DD/MM/YYYY").toDate(),
+          }
+        }
+      );
+    }
+    
+  }
+
+  /**
+   * ***updateAddress***
+   * 
+   * @param addressCountry pais
+   * @param addressStreet rua
+   * @param addressNumber numero
+   * @param addressState estado
+   * @param addressCity cidade
+   * @returns void
+   */
+  public async updateAddress(addressCountry: string, addressStreet: string, addressNumber: number, addressState: string, addressCity: string): Promise<void> {
+    await prisma.getSession().user.update(
       {
+        where: {
+          id: this.getValue("id")
+        },
         data: {
-          userId: this.getValue("id"),
-          cardCVV: parseInt(cardCVV),
-          cardFlag,
-          cardName,
-          cardNumber: parseInt(cardNumber),
-          cardValidity: moment(cardValidity, "DD/MM/YYYY").toDate(),
+          addressCity,
+          addressCountry,
+          addressNumber,
+          addressState,
+          addressStreet
         }
       }
     );
+    return;
   }
 
   /**
