@@ -60,6 +60,22 @@ export class Produto {
     return;
   }
 
+  public static async removeRating(ratingId: number): Promise<boolean> {
+    try {
+      await prisma.getSession().rating.delete(
+        {
+          where: {
+            id: ratingId
+          }
+        }
+      );
+      return true;
+    } catch(err) {
+      console.log(err);
+      return false;
+    }
+  } 
+
   public static async listAllProducts(): Promise<Product[][]> {
     try {
       let produtos = await prisma.getSession().product.findMany({});

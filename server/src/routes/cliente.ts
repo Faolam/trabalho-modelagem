@@ -184,5 +184,32 @@ cliente.post(`${api}/user/newRating`, ClientAuthentication.isAuthorized, async (
   }
 );
 
+cliente.post(`${api}/user/deleteRating`, ClientAuthentication.isAuthorized, async (req, res) => 
+  {
+    // Id do cliente que está acessando essa rota.
+    const id = parseInt((req as any).userId) as number;
+    const user = new User(id);
+    await user.initializeUser();
+
+    if (!user.existsUser()) return res.json({ status: 425, auth: false, data: null }).end();
+
+    if (!req.body.ratingId) return res.json({ status: 432, auth: false, data: null }).end();
+
+    const {ratingId} = req.body;
+
+    const rating = await Produto.removeRating(ratingId);
+    
+    if (!rating) return res.json({ status: 438, auth: false, data: null }).end();
+
+    return res.json(
+      { 
+        status: 200, 
+        auth: true,
+        data: null
+      }
+    );
+  }
+);
+
 
 export default cliente;
