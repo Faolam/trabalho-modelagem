@@ -2,7 +2,7 @@ import Image from "next/image";
 
 import style from './review.module.css';
 
-export function Review({ foto, nome, nota, descricao }) {
+export function Review({ foto, nome, nota, descricao, handleDelete }) {
   return (
     <div className={style.container}>
       <header>
@@ -16,7 +16,14 @@ export function Review({ foto, nome, nota, descricao }) {
           <span className={style.nota}>{nota}/5</span>
         </div>
       </header>
-      <p>{descricao}</p>
+      <p className={style.descricao}>{descricao}</p>
+      {handleDelete ? (
+        <button type="button" onClick={handleDelete}>
+          <span class="material-symbols-outlined">
+            delete
+          </span>
+        </button>
+      ) : <></>}
     </div>
   );
 }

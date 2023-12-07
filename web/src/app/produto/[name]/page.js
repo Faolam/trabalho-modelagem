@@ -21,6 +21,7 @@ export default function Produto({ params }) {
   const [brownie, setBrownie] = useState(null);
   const [userRating, setUserRating] = useState(5);
   const [userRatingDescription, setUserRatingDescription] = useState('');
+  const [avaliou, setAvaliou] = useState(false);
 
   function getProduct() {
     const name = decodeURIComponent(params.name);
@@ -32,6 +33,9 @@ export default function Produto({ params }) {
           throw new Error();
         }
         setBrownie(response.data.data[0]);
+        if (response.data.data[0].ratings.find(r => r.userEmail == user.email)) {
+          setAvaliou(true);
+        }
       })
       .finally(() => setSearching(false));
   }
@@ -39,6 +43,18 @@ export default function Produto({ params }) {
   useEffect(() => {
     getProduct();
   }, []);
+
+  function handleDelete(ratingId) {
+    if (confirm("Tem certeza que deseja deletar sua avaliação?")) {
+      server.post('/user/deleteRating', { ratingId }, { headers: { authorization: token } })
+        .then(res => {
+          if (res.data.status != 200) throw new Error();
+          getProduct();
+          alert("Avaliação deletada!")
+        })
+        .catch(e => alert("Não foi possível deleter a avaliação. Tente novamente mais tarde."))
+    }
+  }
 
   function handleRate(e) {
 
@@ -54,11 +70,12 @@ export default function Produto({ params }) {
         if (response.data.status !== 200) {
           throw new Error();
         }
-        alert("Avaliação Cadastrada com Sucesso !")
+        getProduct();
+        alert("Avaliação Cadastrada com Sucesso !");
       })
       .catch(error => {
         console.log(error);
-        alert("Não foi cadastrar sua Avaliação. Tente novamente mais tarde.")
+        alert("Não foi possível cadastrar sua Avaliação. Tente novamente mais tarde.")
       })
   }
 
@@ -112,7 +129,7 @@ export default function Produto({ params }) {
         <div className={style.reviews_container}>
           <header><span>Avaliações {brownie.amountRating}</span></header>
           <div className={style.reviews}>
-            {user ? (
+            {user && !avaliou ? (
               <div className={style.userReview}>
                 <h2>Faça a sua avaliação</h2>
                 <div>
@@ -126,7 +143,9 @@ export default function Produto({ params }) {
                 <button type="button" onClick={handleRate} className={style.avaliar}>AVALIAR</button>
               </div>
             ) : <></>}
-            {brownie.ratings.map(({ userImage, userName, starts, comment }) => <Review foto={`${process.env.NEXT_PUBLIC_IMAGES_PATH}/${userImage}.jpg`} nome={userName} nota={starts} descricao={comment} />)}
+            {brownie.ratings.map(({ id, userImage, userEmail, userName, starts, comment }) => (
+              <Review foto={`${process.env.NEXT_PUBLIC_IMAGES_PATH}/${userImage}.jpg`} nome={userName} nota={starts} descricao={comment} handleDelete={user && userEmail == user.email ? () => handleDelete(id) : undefined} />
+            ))}
           </div>
         </div>
       </main>
