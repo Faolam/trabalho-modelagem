@@ -12,7 +12,7 @@
 .content {
   width: 100%;
   max-width: calc(var(--max-width) + 22rem);
-  height: 6.6rem;
+  height: 6rem;
   display: grid;
   grid-template-columns: 1fr 1.4fr 1fr;
   align-items: center;
