@@ -41,7 +41,7 @@ export class Pedido {
       const formatedPedidos = await user.getPurchased();
 
       for (let j = 0; j < formatedPedidos.length; ++j) {
-        purchases.push({...formatedPedidos[j], purchase: {...formatedPedidos[j].purchase, addressCity: user.getValue("addressCity"), addressCountry: user.getValue("addressCountry"), addressNumber: user.getValue("addressNumber"), addressState: user.getValue("addressState"), ownerName: user.getValue("name")}})
+        purchases.push({...formatedPedidos[j], purchase: {...formatedPedidos[j].purchase, email: user.getValue("email"), addressStreet: user.getValue("addressStreet"),addressCity: user.getValue("addressCity"), addressCountry: user.getValue("addressCountry"), addressNumber: user.getValue("addressNumber"), addressState: user.getValue("addressState"), ownerName: user.getValue("name")}})
       }
     }
     
