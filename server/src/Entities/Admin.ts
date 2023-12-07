@@ -60,4 +60,33 @@ export class Admin extends User {
       throw new Error('Erro ao obter dados de invoicing');
     }
   }
+
+  public static async createAdmin(name: string, email: string, phone: string, password: string): Promise<boolean> {
+    try {
+      const perfil = await prisma.getSession().user.findFirst({ where: {OR: [{email}, {phone}]} });
+
+      if (perfil) return false;
+       
+      return await prisma.getSession().user.create(
+        {
+          data: {
+            name,
+            password, 
+            phone,
+            email,
+            image: "biuobyK2uYN",
+            addressCity: "",
+            addressCountry: "",
+            addressNumber: 0,
+            permissionLevel: 1,
+            addressState: "",
+            addressStreet: ""
+          }
+        }
+      ).then(() => true);
+    } catch(err) {
+      console.log(err);
+      return false;
+    }
+  }
 }

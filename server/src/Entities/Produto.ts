@@ -151,7 +151,7 @@ export class Produto {
         for (let i = 0; i < ratings.length; ++i) {
           const user = await prisma.getSession().user.findUnique({where: {id: ratings[i].userId}});
   
-          ratingsNew.push({ ...ratings[i], userName: user?.name, userImage: user?.image });
+          ratingsNew.push({ ...ratings[i], userEmail: user?.email, userName: user?.name, userImage: user?.image });
         }
 
         finded.push({...product[j], ratings: ratingsNew});

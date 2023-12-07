@@ -125,6 +125,47 @@ admin.get(`${api}/admin/getAllPurchases`, ClientAuthentication.isAuthorized, asy
   }
 );
 
+admin.post(`${api}/admin/newUser`, ClientAuthentication.isAuthorized, async (req, res) => 
+  {
+    // Id do cliente que está acessando essa rota.
+    const id = parseInt((req as any).userId) as number;
+    const user = new User(id);
+    await user.initializeUser();
+
+    if (!user.existsUser()) return res.json({ status: 425, auth: false, data: null }).end();
+
+    if (user.getValue("permissionLevel") == 0) return res.json({ status: 431, auth: true, data: null }).end();
+
+    if (!req.body.name || !req.body.email || !req.body.phone || !req.body.password) return res.json({ status: 432, auth: false, data: null }).end();
+
+    const {name, email, phone, password} = req.body;
+
+    if (typeof name !== "string") return res.json({ status: 436, auth: false, data: null }).end();
+    if (typeof email !== "string") return res.json({ status: 436, auth: false, data: null }).end();
+    if (typeof phone !== "string") return res.json({ status: 436, auth: false, data: null }).end();
+    if (typeof password !== "string") return res.json({ status: 436, auth: false, data: null }).end();
+
+    if (!password.length) return res.json({ status: 436, auth: false, data: null }).end();
+    if (!name.length) return res.json({ status: 436, auth: false, data: null }).end();
+    if (!phone.length) return res.json({ status: 436, auth: false, data: null }).end();
+    if (!email.length) return res.json({ status: 436, auth: false, data: null }).end();
+
+    const client = await Admin.createAdmin(name, email, phone, password);
+
+    if (client) {
+      return res.json(
+        { 
+          status: 200, 
+          auth: true,
+          data: null
+        }
+      );
+    } else {
+      return res.json({ status: 500, auth: false, data: null }).end();
+    }
+  }
+);
+
 
 admin.post(`${api}/admin/deleteProduct`, ClientAuthentication.isAuthorized, async (req, res) => 
   {
