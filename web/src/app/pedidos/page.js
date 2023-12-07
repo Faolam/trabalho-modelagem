@@ -18,7 +18,7 @@ export default function Pedidos() {
   const [pedidos, setPedidos] = useState([]);
 
   function getStatusPedido(pedido) {
-    return !pedido.purchase.send ? '(Esperando envio)' : !pedido.purchase.delivered ? '(Pedido enviado)' : '(Pedido entregue)';
+    return !pedido.purchase.sent ? '(Esperando envio)' : !pedido.purchase.delivered ? '(Pedido enviado)' : '(Pedido entregue)';
   }
 
   useEffect(() => {

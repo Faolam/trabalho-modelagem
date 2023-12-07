@@ -33,6 +33,7 @@ export default function HomeAdmin() {
           <Link href="/admin/produtos" className={style.actionButton}>Ver Produtos</Link>
           <Link href="/admin/pedidos" className={style.actionButton}>Ver Pedidos</Link>
           <Link href="/admin/faturamento" className={style.actionButton}>Ver Faturamento</Link>
+          <Link href="/admin/cadastro" className={style.actionButton}>Cadastrar Administrador</Link>
         </div>
       </main>
     </>

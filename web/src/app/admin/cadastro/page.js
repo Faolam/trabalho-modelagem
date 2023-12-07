@@ -1,10 +1,11 @@
 "use client"
 
-import { useContext, useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import Link from 'next/link';
-
+import { AuthContext } from '@/contexts/auth';
 import style from "./page.module.css";
 import { useRouter } from 'next/navigation';
+
 
 export default function CadastroAdmin() {
   const [nome, setNome] = useState('');

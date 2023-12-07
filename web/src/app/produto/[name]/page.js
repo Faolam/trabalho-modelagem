@@ -14,7 +14,7 @@ import { useRouter } from 'next/navigation';
 
 
 export default function Produto({ params }) {
-  const { user } = useContext(AuthContext);
+  const { user, token } = useContext(AuthContext);
   const { addItem } = useContext(CartContext);
   const router = useRouter();
   const [searching, setSearching] = useState(true);
@@ -22,7 +22,7 @@ export default function Produto({ params }) {
   const [userRating, setUserRating] = useState(5);
   const [userRatingDescription, setUserRatingDescription] = useState('');
 
-  useEffect(() => {
+  function getProduct() {
     const name = decodeURIComponent(params.name);
     server.get('/web/findProduct', {
       params: { name }
@@ -34,20 +34,21 @@ export default function Produto({ params }) {
         setBrownie(response.data.data[0]);
       })
       .finally(() => setSearching(false));
+  }
+
+  useEffect(() => {
+    getProduct();
   }, []);
 
   function handleRate(e) {
 
-    alert(brownie.id + 10)
-    alert(userRatingDescription)
-    alert(parseInt(userRating) + 20)
-
     e.preventDefault();
+
     server.post('/user/newRating', {
       productId: brownie.id,
       description: userRatingDescription,
       stars: parseInt(userRating),
-    })
+    }, { headers: { authorization: token } })
       .then(response => {
         console.log(response.data.status)
         if (response.data.status !== 200) {
