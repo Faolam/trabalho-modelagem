@@ -55,9 +55,25 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 3rem;
+  padding-bottom: 6rem;
 }
 
 .entradasContainer h2,
 .saidasContainer h2 {
   margin-bottom: 2rem;
+}
+
+.entradas,
+.saidas {
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+}
+
+.inOut {
+  padding: 2rem;
+  border-radius: var(--border-radius);
+  background: var(--background-highlight-color);
+  font-size: 1.4rem;
+  font-weight: 500;
 }
