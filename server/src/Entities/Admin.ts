@@ -5,6 +5,24 @@ import { PrismaSession as prisma } from "../../prisma/prismaClient";
 export class Admin extends User {
   constructor(id: number) { super(id); }
 
+  public static async getAllInvoicing(): Promise<{ in: Batches[], out: Purchase[] }> {
+    const batchesIn = await prisma.getSession().batches.findMany({});
+
+    let batchesInsertName = [];
+
+    for(let i = 0; i < batchesIn.length; ++i) {
+      const product = await prisma.getSession().product.findUnique({where: {id: batchesIn[i].productId}});
+
+      if (!product) continue;
+
+      batchesInsertName.push({...batchesIn[i], price: product.price, brownieName: product.brownieName});
+    }
+
+    const purchasesOut = await prisma.getSession().purchase.findMany({});
+
+    return { in: batchesInsertName, out: purchasesOut };
+  }
+
   public static async getInvoicing(inicio: Date, fim: Date): Promise<{ in: Batches[], out: Purchase[] }> {
     try {
       const batchesIn = await prisma.getSession().batches.findMany({
