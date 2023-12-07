@@ -41,6 +41,8 @@ auth.get(`${api}/user/info`, ClientAuthentication.isAuthorized, async (req, res)
           name: user.getValue("name"),
           email: obscureEmail(user.getValue("email")),
           createdAt: user.getValue("createdAt"),
+          phone: user.getValue("phone"),
+          image: user.getValue("image"),
           isLocked: user.getValue("isLocked"),
           permissionLevel: user.getValue("permissionLevel") == 1 ? "ADMINISTRADOR" : "CLIENTE",
           addressCountry: user.getValue("addressCountry"),

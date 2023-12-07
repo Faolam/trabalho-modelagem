@@ -350,7 +350,7 @@ export class User {
               <p>
                 Produto: ${product.brownieName}<br>
                 Quantidade: ${product.amount} unidade<br>
-                Total: R$ ${(product.amount*product.price).toFixed(2)}
+                Total: R$ ${(cost).toFixed(2)}
               </p>
               `)}
               <p style="font-size: 0.8em; color: #777;">
