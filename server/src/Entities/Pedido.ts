@@ -30,7 +30,7 @@ export class Pedido {
 
     for(let i = 0; i < usersBd.length; ++i) {
       const user = new User(usersBd[i].id);
-      user.initializeUser();
+      await user.initializeUser();
 
       if (!user.existsUser()) continue;
 
