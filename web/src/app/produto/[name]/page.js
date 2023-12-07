@@ -36,8 +36,29 @@ export default function Produto({ params }) {
       .finally(() => setSearching(false));
   }, []);
 
-  function handleRate() {
+  function handleRate(e) {
 
+    alert(brownie.id + 10)
+    alert(userRatingDescription)
+    alert(parseInt(userRating) + 20)
+
+    e.preventDefault();
+    server.post('/user/newRating', {
+      productId: brownie.id,
+      description: userRatingDescription,
+      stars: parseInt(userRating),
+    })
+      .then(response => {
+        console.log(response.data.status)
+        if (response.data.status !== 200) {
+          throw new Error();
+        }
+        alert("Avaliação Cadastrada com Sucesso !")
+      })
+      .catch(error => {
+        console.log(error);
+        alert("Não foi cadastrar sua Avaliação. Tente novamente mais tarde.")
+      })
   }
 
   if (searching) {

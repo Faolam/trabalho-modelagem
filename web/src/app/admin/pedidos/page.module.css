@@ -13,6 +13,24 @@
   text-align: center;
 }
 
+.statusPedido {
+  margin-right: 0.8rem;
+  padding: 0.4rem 0.6rem;
+  padding-right: auto;
+  color: var(--highlight-color);
+  font-weight: 500;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  border-radius: 0.6rem;
+  margin-top: 1rem;
+  text-align: center;
+  background: var(--background-highlight-color);
+}
+
+.statusPedido:hover {
+  filter: brightness(0.96);
+}
+
 .pedidos {
   display: grid;
   gap: 2rem;
