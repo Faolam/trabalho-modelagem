@@ -1,4 +1,4 @@
-import { Purchase } from "@prisma/client";
+import { Product, Purchase } from "@prisma/client";
 import { PrismaSession as prisma } from "../../prisma/prismaClient";
 import { User } from "./User";
 
@@ -44,5 +44,45 @@ export class Pedido {
     }
     
     return purchases;
+  }
+
+  public async Update(type: number): Promise<void> {
+    switch(type) {
+      case 0:
+        await prisma.getSession().purchase.update({
+          where: {
+            id: this.getValue("id")
+          },
+          data: {
+            sent: false,
+            delivered: false
+          }
+        });
+        break;
+      case 1:
+        await prisma.getSession().purchase.update({
+          where: {
+            id: this.getValue("id")
+          },
+          data: {
+            sent: true,
+            delivered: false
+          }
+        });
+        break;
+      case 2:
+        await prisma.getSession().purchase.update({
+          where: {
+            id: this.getValue("id")
+          },
+          data: {
+            sent: true,
+            delivered: true
+          }
+        });
+        break;
+      default:
+        return;
+    }
   }
 }
