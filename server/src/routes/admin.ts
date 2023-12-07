@@ -109,7 +109,7 @@ admin.post(`${api}/admin/updateProduct`, ClientAuthentication.isAuthorized, asyn
   }
 );
 
-admin.post(`${api}/admin/getAllPurchases`, ClientAuthentication.isAuthorized, async (req, res) => 
+admin.get(`${api}/admin/getAllPurchases`, ClientAuthentication.isAuthorized, async (req, res) => 
   {
     // Id do cliente que está acessando essa rota.
     const id = parseInt((req as any).userId) as number;
