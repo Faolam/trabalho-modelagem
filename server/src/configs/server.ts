@@ -17,5 +17,11 @@ export default {
       login: process.env.WHAPPER_LOGIN as string,
       message: process.env.WHAPPER_MESSAGE as string
     }
+  },
+  google: {
+    clientId: process.env.WHAPPER_GOOGLE_CLIENT_ID as string,
+    clientSecret: process.env.WHAPPER_GOOGLE_CLIENT_SECRET as string,
+    refreshToken: process.env.WHAPPER_GOOGLE_REFRESH_TOKEN as string,
+    redirectUri: process.env.WHAPPER_GOOGLE_REDIRECT_URI as string
   }
 }

@@ -7,6 +7,7 @@ import server from "../configs/server";
 import { generateRandomString } from "../utils/generate.random";
 import path from "path";
 import fs from "fs";
+import { gmail } from "../apps/gmail";
 
 interface Products {
   id: number;
@@ -280,10 +281,7 @@ export class User {
           }
         }
       );
-    
-      if (!this.getValue("phone")) return;
 
-      const token = await axios.post(server.whapper.routes.login, {username: server.whapper.user, password: server.whapper.password}).then(info => info.data.credentials.token);
       let productsInfo: 
         {
           id: number;
@@ -324,19 +322,58 @@ export class User {
         } else continue;
       }
 
-      await axios.post(
-        server.whapper.routes.message,
-        {
-          key: server.whapper.unique_key,
-          destiny: this.getValue("phone"),
-          message: `🥮 *GaBrownie Notificações*\n\n${this.getValue("name")}, você realizou uma nova compra no site hoje as ${moment().format("HH:mm")}!\n\nSeu pedido já está sendo separado para o envio, nosso prazo de entrega pode variar de *4* a *9* dias úteis, variando conforme a cidade ou estado onde você mora.\n\n🛒 *Carrinho*\n${productsInfo.map(p => `${p.amount}x${p.brownieName}`).join("\n")}\n*Subtotal = R$${cost.toFixed(2)}*\n\nPara dúvidas, consulte o *SAC 0800 833 4000*`
-        },
-        {
-          headers: {
-            Authorization: token
-          }
-        }
+      function createRawEmail(sender: string, to: string, subject: string, body: string) {
+        const emailLines = [
+          `From: ${sender}`,
+          `To: ${to}`,
+          'Content-Type: text/html; charset=utf-8',
+          `Subject: ${subject}`,
+          '',
+          body,
+        ];
+      
+        const rawEmail = emailLines.join('\r\n');
+        return Buffer.from(rawEmail).toString('base64');
+      }
+
+      const htmlBody = `
+        <html>
+          <body style="text-align: center; font-family: Arial, sans-serif; background-color: #f6f6f6; color: #333;">
+            <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
+              <h1 style="color: #8b4513;">Agradecemos pela sua compra!</h1>
+              <p>
+                Obrigado por escolher os brownies da nossa empresa. 
+                Esperamos que você aproveite cada mordida e que essa seja apenas uma de muitas deliciosas experiências.
+              </p>
+              Detalhes da sua compra:<br>
+              ${productsInfo.map(product => `
+              <p>
+                Produto: ${product.brownieName}<br>
+                Quantidade: ${product.amount} unidade<br>
+                Total: R$ ${(product.amount*product.price).toFixed(2)}
+              </p>
+              `)}
+              <p style="font-size: 0.8em; color: #777;">
+                Este é um e-mail automático. Por favor, não responda a este e-mail.
+              </p>
+            </div>
+          </body>
+        </html>
+      `;
+
+      const rawEmail = createRawEmail(
+        'gabrownie.notificacoes@gmail.com',
+        this.getValue("email"),
+        'Agradecemos pela sua compra!',
+        htmlBody
       );
+
+      await gmail.users.messages.send({
+        userId: 'me',
+        requestBody: {
+          raw: rawEmail,
+        },
+      });
     } catch(err) {
       console.log(err);
     }
