@@ -156,6 +156,16 @@ export class Produto {
 
   public async addRating(user: User, description: string, rating: (0 | 1 | 2 | 3 | 4 | 5)): Promise<boolean> {
     try {
+      const hasRating = await prisma.getSession().rating.findFirst(
+        {
+          where: {
+            userId: user.getValue("id")
+          }
+        }
+      );
+
+      if (hasRating) return false;
+
       await prisma.getSession().product.update(
         {
           where: {

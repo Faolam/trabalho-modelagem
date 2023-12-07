@@ -170,7 +170,9 @@ cliente.post(`${api}/user/newRating`, ClientAuthentication.isAuthorized, async (
 
     if (!product.existProduct()) return res.json({ status: 434, auth: true, data: null }).end();
 
-    await product.addRating(user, description.toString(), parseInt(stars.toString()) as (1 | 2 | 3 | 4 | 5));
+    const rating = await product.addRating(user, description.toString(), parseInt(stars.toString()) as (1 | 2 | 3 | 4 | 5));
+
+    if (!rating) return res.json({ status: 437, auth: false, data: null }).end();
     
     return res.json(
       { 

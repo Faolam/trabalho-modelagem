@@ -11,4 +11,5 @@
 434 - Produto inexistente.
 435 - bandeira de cartão de credito invalida
 436 - formato incorreto
+437 - Esse usuário já faz um rating
 500 - erro no servidor
