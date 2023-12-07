@@ -164,37 +164,40 @@ export class User {
    * @param cardValidity validade do cartão
    */
   public async insertCard(cardName: string, cardNumber: string, cardFlag: string, cardCVV: string, cardValidity: string): Promise<void> {
-    const existCard = await prisma.getSession().card.findUnique({where: {id: 0}});
-    if (!existCard) {
-      await prisma.getSession().card.create(
-        {
-          data: {
-            userId: this.getValue("id"),
-            cardCVV: parseInt(cardCVV),
-            cardFlag,
-            cardName,
-            cardNumber: parseInt(cardNumber),
-            cardValidity: moment(cardValidity, "DD/MM/YYYY").toDate(),
+    try {
+      const existCard = await prisma.getSession().card.findUnique({where: {id: 0}});
+      if (!existCard) {
+        await prisma.getSession().card.create(
+          {
+            data: {
+              userId: this.getValue("id"),
+              cardCVV: parseInt(cardCVV),
+              cardFlag,
+              cardName,
+              cardNumber: parseInt(cardNumber),
+              cardValidity: moment(cardValidity, "DD/MM/YYYY").toDate(),
+            }
           }
-        }
-      );
-    } else {
-      await prisma.getSession().card.update(
-        {
-          where: {
-            id: 0
-          },
-          data: {
-            cardCVV: parseInt(cardCVV),
-            cardFlag,
-            cardName,
-            cardNumber: parseInt(cardNumber),
-            cardValidity: moment(cardValidity, "DD/MM/YYYY").toDate(),
+        );
+      } else {
+        await prisma.getSession().card.update(
+          {
+            where: {
+              id: 0
+            },
+            data: {
+              cardCVV: parseInt(cardCVV),
+              cardFlag,
+              cardName,
+              cardNumber: parseInt(cardNumber),
+              cardValidity: moment(cardValidity, "DD/MM/YYYY").toDate(),
+            }
           }
-        }
-      );
+        );
+      }
+    } catch(err) {
+      console.log(err);
     }
-    
   }
 
   /**
