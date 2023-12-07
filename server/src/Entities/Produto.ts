@@ -138,16 +138,21 @@ export class Produto {
 
       if (!product.length) return null
 
-      let ratingsNew: {}[] = [];
-      const ratings = await prisma.getSession().rating.findMany({where: {productId: product[0].id }});
+      let finded: {}[] = [];
+      
+      for (let j = 0; j < product.length; ++j) {
+        let ratingsNew: {}[] = [];
+        const ratings = await prisma.getSession().rating.findMany({where: {productId: product[j].id }});
+        for (let i = 0; i < ratings.length; ++i) {
+          const user = await prisma.getSession().user.findUnique({where: {id: ratings[i].userId}});
+  
+          ratingsNew.push({ ...ratings[i], userName: user?.name, userImage: user?.image });
+        }
 
-      for (let i = 0; i < ratings.length; ++i) {
-        const user = await prisma.getSession().user.findUnique({where: {id: ratings[i].userId}});
-
-        ratingsNew.push({ ...ratings[i], userName: user?.name, userImage: user?.image });
+        finded.push({...product[j], ratings: ratingsNew});
       }
 
-      return {...product[0], ratings: ratingsNew};
+      return finded;
     } catch(err) {
       console.log(err);
       return null;

@@ -21,6 +21,8 @@ admin.post(`${api}/admin/newProduct`, ClientAuthentication.isAuthorized, async (
 
     if (user.getValue("permissionLevel") == 0) return res.json({ status: 431, auth: true, data: null }).end();
 
+    console.log(req.body);
+
     if (!req.body.name || !req.body.category || !req.body.price || !req.body.image) return res.json({ status: 432, auth: true, data: null }).end();
 
     const { name, category, image, price } = req.body;
