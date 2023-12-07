@@ -105,7 +105,7 @@ export class Produto {
             brownieName,
             inStock: 0,
             logoPath,
-            price
+            price: parseFloat(price.toString())
           }
         }
       );
