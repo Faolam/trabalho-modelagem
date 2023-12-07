@@ -23,7 +23,7 @@ export class Admin extends User {
 
         if (!product) continue;
 
-        batchesInsertName.push({...batchesIn[i], brownieName: product.brownieName});
+        batchesInsertName.push({...batchesIn[i], price: product.price, brownieName: product.brownieName});
       }
   
       const purchasesOut = await prisma.getSession().purchase.findMany({
