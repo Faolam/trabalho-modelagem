@@ -48,7 +48,7 @@ export default function Faturamento() {
         let estoqueMoney = 0;
 
         vendas.forEach(venda => vendasMoney += venda.cost);
-        estoques.forEach(estoque => estoqueMoney += estoque.price);
+        estoques.forEach(estoque => estoqueMoney += estoque.price * estoque.stock);
 
         setVendasTotal(vendasMoney);
         setEstoquesTotal(estoqueMoney);
@@ -77,7 +77,7 @@ export default function Faturamento() {
               <span>Fim do período</span>
               <input type="date" value={finalDate} onChange={e => setFinalDate(e.target.value)} />
             </div>
-            <strong>Lucro: <span>R${lucro}</span></strong>
+            <strong>Lucro: <span>R${lucro.toFixed(2)}</span></strong>
           </div>
         </header>
         <div className={style.entradasSaidas}>

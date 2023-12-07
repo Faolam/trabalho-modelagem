@@ -5,7 +5,6 @@ import style from './page.module.css';
 
 import { useContext, useEffect, useState } from 'react';
 
-import { Header } from '@/ui/header';
 import { Modal } from '@/ui/modal';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -33,11 +32,10 @@ export default function PedidosAdmin() {
 
   return (
     <>
-      <Header />
       <main className='main'>
         <header className='page-header'>
           <h1 className='page-title'>Pedidos</h1>
-          <Link href="/admin/home" className={style.goBack}>Voltar</Link>
+          <Link href="/admin" className={style.goBack}>Voltar</Link>
         </header>
         <div className={style.pedidos}>
           {pedidos.map(pedido => (

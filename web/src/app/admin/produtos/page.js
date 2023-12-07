@@ -4,7 +4,6 @@
 import style from './page.module.css';
 import { AuthContext } from "@/contexts/auth";
 import { useContext, useState, useEffect } from 'react';
-import { Header } from '@/ui/header';
 import { Modal } from '@/ui/modal';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -35,6 +34,21 @@ export default function ProdutosAdmin() {
       .catch(e => alert("Não foi possível listar os pedidos"));
   }
 
+  function getBrownieStock(brownie) {
+    server.get('/admin/getInvoicing', {
+      headers: { authorization: token }
+    })
+      .then(response => {
+        if (response.data.status !== 200) {
+          throw new Error();
+        }
+
+        const estoques = response.data.data.in.filter(estoque => estoque.productId == brownie.id);
+        setEstoqueBrownie(estoques);
+      })
+      .catch(e => alert("Não foi possível obter o estoque do brownie selecionado"));
+  }
+
   useEffect(() => {
     if (!user || user && user.permissionLevel != 1) {
       router.push('/admin/login');
@@ -46,37 +60,13 @@ export default function ProdutosAdmin() {
   }, []);
 
   useEffect(() => {
-    if (!brownie) return;
+    if (!brownie) {
+      setEstoqueBrownie([]);
+      return;
+    }
 
-    server.get('/admin/getInvoicing', {
-      headers: { authorization: token },
-      params: {
-        dateIn: moment(initialDate, "YYYY-MM-DD").format("DD/MM/YYYY"),
-        dateOut: moment(finalDate, "YYYY-MM-DD").format("DD/MM/YYYY")
-      }
-    })
-      .then(response => {
-        if (response.data.status !== 200) {
-          throw new Error();
-        }
-
-        const vendas = response.data.data.out;
-        const estoques = response.data.data.in;
-
-        let vendasMoney = 0;
-        let estoqueMoney = 0;
-
-        vendas.forEach(venda => vendasMoney += venda.cost);
-        estoques.forEach(estoque => estoqueMoney += estoque.price);
-
-        setVendasTotal(vendasMoney);
-        setEstoquesTotal(estoqueMoney);
-        setLucro(vendasMoney - estoqueMoney);
-
-        setVendas(response.data.data.out);
-        setEstoques(response.data.data.in);
-      })
-      .catch(e => alert("Não foi possível obter o faturamento"));
+    // estoqueBrownie, setEstoqueBrownie
+    getBrownieStock(brownie);
   }, [brownie]);
 
   function handleDelete(brownie) {
@@ -99,6 +89,7 @@ export default function ProdutosAdmin() {
       .then(res => {
         if (res.data.status != 200) throw new Error();
         setBrownie(null);
+        getBrownies();
         alert("Lote adicionado!");
       })
       .catch(err => alert("Não foi possível criar o lote."));
@@ -110,7 +101,6 @@ export default function ProdutosAdmin() {
 
   return (
     <>
-      <Header />
       <main className='main'>
         <header className='page-header'>
           <h1 className='page-title'>Produtos</h1>
@@ -160,7 +150,14 @@ export default function ProdutosAdmin() {
             <div>Valor: R${(brownie.price).toFixed(2)}</div>
             <div>Unidades: {brownie.inStock}</div>
             <div className={style.estoque}>
-              <h3 style={{ margin: '1rem 0' }}>Estoque</h3>
+              <h3 style={{ margin: '1rem 0' }}>Adições ao Estoque</h3>
+              {estoqueBrownie.map(e => (
+                <div style={{ padding: '1.6rem', borderRadius: '0.8rem', background: '#f8f8f8', marginBottom: '1.2rem', display: 'flex', justifyContent: 'space-between' }}>
+                  <span>Data: {moment(e.createdAt).format("DD/MM/YYYY à\\s HH:mm:ss")}</span>
+                  <span>Quantidade: {e.stock}</span>
+                  <span>Validade: {moment(e.batchValidity).format("DD/MM/YYYY")}</span>
+                </div>
+              ))}
             </div>
             <div className={style.loteContainer}>
               <div className={style.inputLabel}>
