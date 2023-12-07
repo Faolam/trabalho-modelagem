@@ -15,6 +15,16 @@ export class Admin extends User {
           },
         },
       });
+
+      let batchesInsertName = [];
+
+      for(let i = 0; i < batchesIn.length; ++i) {
+        const product = await prisma.getSession().product.findUnique({where: {id: batchesIn[i].productId}});
+
+        if (!product) continue;
+
+        batchesInsertName.push({...batchesIn[i], brownieName: product.brownieName});
+      }
   
       const purchasesOut = await prisma.getSession().purchase.findMany({
         where: {
@@ -25,7 +35,7 @@ export class Admin extends User {
         },
       });
   
-      return { in: batchesIn, out: purchasesOut };
+      return { in: batchesInsertName, out: purchasesOut };
     } catch (error) {
       // Lidar com erros, como logar ou lançar uma exceção
       console.error('Erro ao obter dados de invoicing:', error);
