@@ -55,6 +55,11 @@ export class Produto {
     }
   }
 
+  public async deleteProduct(): Promise<void> {
+    await prisma.getSession().product.delete({where: {id: this.getValue("id")}});
+    return;
+  }
+
   public static async listAllProducts(): Promise<Product[][]> {
     try {
       let produtos = await prisma.getSession().product.findMany({});

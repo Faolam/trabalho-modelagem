@@ -105,4 +105,28 @@ admin.post(`${api}/admin/updateProduct`, ClientAuthentication.isAuthorized, asyn
 );
 
 
+admin.post(`${api}/admin/deleteProduct`, ClientAuthentication.isAuthorized, async (req, res) => 
+  {
+    // Id do cliente que está acessando essa rota.
+    const id = parseInt((req as any).userId) as number;
+    const user = new User(id);
+    await user.initializeUser();
+
+    if (!user.existsUser()) return res.json({ status: 425, auth: false, data: null }).end();
+
+    if (user.getValue("permissionLevel") == 0) return res.json({ status: 431, auth: true, data: null }).end();
+
+    if (!req.body.id) return res.json({ status: 433, auth: true, data: null }).end();
+
+    const product = new Produto(parseInt(req.body.id.toString()));
+    await product.getProduct();
+
+    if (!product.existProduct()) return res.json({ status: 434, auth: true, data: null }).end();
+
+    await product.deleteProduct();
+
+    return res.json({ status: 200, auth: true, data: null }).end()
+  }
+);
+
 export default admin;
