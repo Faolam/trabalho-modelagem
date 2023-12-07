@@ -81,9 +81,9 @@ cliente.post(`${api}/user/newPurchase`, ClientAuthentication.isAuthorized, async
 
     if (updateCard.data.status !== 200) return res.json({ status: 435, auth: false, data: null }).end();
 
-    // await user.updateAddress(country, street, parseInt(number), state, city);
+    await user.updateAddress(country, street, parseInt(number), state, city);
 
-     // await user.newPurchase(cost, products);
+    await user.newPurchase(cost, products);
     
     return res.json(
       { 
