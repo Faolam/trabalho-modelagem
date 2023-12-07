@@ -74,7 +74,7 @@ admin.get(`${api}/admin/getInvoicing`, ClientAuthentication.isAuthorized, async 
 
     const {dateIn, dateOut} = req.query;
 
-    const invoicing = await Admin.getInvoicing(moment(dateIn.toString(), "DD/MM/YYYY").toDate(), moment(dateOut.toString(), "DD/MM/YYYY").toDate());
+    const invoicing = await Admin.getInvoicing(moment(moment(dateIn.toString(), "DD/MM/YYYY").toDate()).subtract(1, 'days').toDate(), moment(moment(dateOut.toString(), "DD/MM/YYYY").toDate()).add(1, 'days').toDate());
 
     return res.json({ status: 200, auth: true, data: invoicing }).end()
   }
