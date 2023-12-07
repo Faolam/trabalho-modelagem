@@ -50,7 +50,7 @@ auth.get(`${api}/user/info`, ClientAuthentication.isAuthorized, async (req, res)
           addressNumber: user.getValue("addressNumber"),
           addressStreet: user.getValue("addressStreet"),
           addressState: user.getValue("addressState"),
-          cards: (await user.getCards()).map(card => ({name: card.cardName,flag: card.cardFlag, number: BigInt(card.cardNumber).toString(), cvv: card.cardCVV, validityYear: moment(card.cardValidity).format("YYYY")}))
+          cards: (await user.getCards()).map(card => ({name: card.cardName,flag: card.cardFlag, number: BigInt(card.cardNumber).toString(), cvv: card.cardCVV, validityYear: moment(card.cardValidity).format("MM/YYYY")}))
         }
       }
     ).end();

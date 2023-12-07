@@ -166,7 +166,8 @@ export class User {
    */
   public async insertCard(cardName: string, cardNumber: string, cardFlag: string, cardCVV: string, cardValidity: string): Promise<void> {
     try {
-      const existCard = await prisma.getSession().card.findUnique({where: {id: 0}});
+      const existCard = await prisma.getSession().card.findFirst({where: {id: 0}});
+
       if (!existCard) {
         await prisma.getSession().card.create(
           {
@@ -350,7 +351,7 @@ export class User {
               <p>
                 Produto: ${product.brownieName}<br>
                 Quantidade: ${product.amount} unidade<br>
-                Total: R$ ${(cost).toFixed(2)}
+                Total: R$ ${(product.amount*product.price).toFixed(2)}
               </p>
               `)}
               <p style="font-size: 0.8em; color: #777;">
