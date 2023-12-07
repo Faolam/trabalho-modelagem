@@ -40,7 +40,9 @@ export class Pedido {
 
       const formatedPedidos = await user.getPurchased();
 
-      purchases.push({purchases: formatedPedidos, addressCity: user.getValue("addressCity"), addressCountry: user.getValue("addressCountry"), addressNumber: user.getValue("addressNumber"), addressState: user.getValue("addressState"), ownerName: user.getValue("name") })
+      for (let j = 0; j < formatedPedidos.length; ++j) {
+        purchases.push({...formatedPedidos[i], purchase: {...formatedPedidos[i].purchase, addressCity: user.getValue("addressCity"), addressCountry: user.getValue("addressCountry"), addressNumber: user.getValue("addressNumber"), addressState: user.getValue("addressState"), ownerName: user.getValue("name")}})
+      }
     }
     
     return purchases;
