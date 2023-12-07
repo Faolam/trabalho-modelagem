@@ -70,11 +70,11 @@ admin.get(`${api}/admin/getInvoicing`, ClientAuthentication.isAuthorized, async 
 
     if (user.getValue("permissionLevel") == 0) return res.json({ status: 431, auth: true, data: null }).end();
 
-    if (!req.body.dateIn || !req.body.dateOut) return res.json({ status: 432, auth: true, data: null }).end();
+    if (!req.query.dateIn || !req.query.dateOut) return res.json({ status: 432, auth: true, data: null }).end();
 
-    const {dateIn, dateOut} = req.body;
+    const {dateIn, dateOut} = req.query;
 
-    const invoicing = await Admin.getInvoicing(moment(dateIn, "DD/MM/YYYY").toDate(), moment(dateOut, "DD/MM/YYYY").toDate());
+    const invoicing = await Admin.getInvoicing(moment(dateIn.toString(), "DD/MM/YYYY").toDate(), moment(dateOut.toString(), "DD/MM/YYYY").toDate());
 
     return res.json({ status: 200, auth: true, data: invoicing }).end()
   }
