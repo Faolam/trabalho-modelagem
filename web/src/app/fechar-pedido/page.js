@@ -149,7 +149,7 @@ export default function FecharPedido() {
             <div className={style.data}>
               <h2>Método de Pagamento</h2>
               <button type="button" className={style.payment} onClick={() => setIsChangingPayment(true)}>
-                <strong>{bandeira}</strong> (Crédito) (termina em <strong>{numeroCartao.toString().slice(-4)}</strong>)
+                {numeroCartao.length > 0 ? <><strong>{bandeira}</strong>` (Crédito)(termina em ` <strong>{numeroCartao.toString().slice(-4)}</strong>`)`</> : "Adicione seu Cartão."}
               </button>
             </div>
             <div className={style.data}>
