@@ -55,13 +55,18 @@
   border-bottom: 1.5px solid #888;
 }
 
-.paragrafoProdutos {
+.paragrafoProdutos {}
+
+.produto {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin-top: 2rem;
 }
 
 .lastParagrafo {
-  padding: 2rem 0;
-  margin-bottom: 0.6rem;
+  padding: 2rem 0 0;
+  margin-bottom: 2rem;
   width: 39rem;
   border-top: 1.5px solid #888;
 

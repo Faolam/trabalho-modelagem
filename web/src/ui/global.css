@@ -59,6 +59,11 @@ button {
   transition: filter 0.2s;
 }
 
+textarea {
+  font-family: var(--font-inter);
+  font-size: 1.6rem;
+}
+
 button:hover {
   cursor: pointer;
   filter: brightness(1.1);

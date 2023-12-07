@@ -11,7 +11,40 @@
   color: var(--highlight-color);
 }
 
-.carrinho {
+.rating {
+  display: flex;
+  gap: 1.6rem;
+}
+
+.rating span {
+  font-weight: 500;
+  color: var(--highlight-color);
+}
+
+.userReview {
+  padding: 2rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+}
+
+.userReview h2 {
+  font-size: 2rem;
+  margin-bottom: 1.6rem;
+}
+
+.userReview textarea {
+  display: block;
+  width: 100%;
+  min-height: 6rem;
+  padding: 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  resize: vertical;
+  margin-top: 1.6rem;
+}
+
+.carrinho,
+.avaliar {
   width: 28rem;
   height: 5rem;
   margin-top: 1.5rem;
@@ -19,6 +52,13 @@
   border-radius: var(--border-radius);
   color: #FFF;
   font-weight: 500;
+}
+
+.avaliar {
+  width: auto;
+  height: auto;
+  font-size: 1.4rem;
+  padding: 0.6rem 1.6rem;
 }
 
 .reviews_container {

@@ -18,7 +18,7 @@ export function BrownieList({ type, products }) {
             />
             <div>
               <span>{brownieName}</span>
-              <span className={style.brownie_price}>R$ {price}</span>
+              <span className={style.brownie_price}>R${parseFloat(price).toFixed(2)}</span>
             </div>
           </Link>
         ))}

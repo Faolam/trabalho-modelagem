@@ -8,6 +8,19 @@ import style from "./page.module.css";
 
 export default function Faturamento() {
   const [data, setData] = useState('12/04/2004');
+  const router = useRouter();
+  const { user } = useContext(AuthContext);
+
+  useEffect(() => {
+    if (!user || user && user.permissionLevel != 1) {
+      router.push('/admin/login');
+      return;
+    }
+  }, []);
+
+  if (!user || user && user.permissionLevel != 1) {
+    return <></>;
+  }
 
   return (
     <>

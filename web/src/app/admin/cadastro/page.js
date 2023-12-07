@@ -1,16 +1,30 @@
 "use client"
 
 import { Header } from '../../../ui/header';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import Link from 'next/link';
 
 import style from "./page.module.css";
+import { useRouter } from 'next/navigation';
 
 export default function CadastroAdmin() {
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [repeteSenha, setRepeteSenha] = useState('');
+  const router = useRouter();
+  const { user } = useContext(AuthContext);
+
+  useEffect(() => {
+    if (!user || user && user.permissionLevel != 1) {
+      router.push('/admin/login');
+      return;
+    }
+  }, []);
+
+  if (!user || user && user.permissionLevel != 1) {
+    return <></>;
+  }
 
   function enviar() {
     let texto = "Nome: " + nome + "\nEmail: " + email + "\nSenha: " + senha + "\nSenha Repetida: " + repeteSenha

@@ -31,7 +31,7 @@ export default function Cadastro() {
       phone
     })
       .then(response => {
-        if (response.status !== 200) {
+        if (response.data.status !== 200) {
           throw new Error();
         }
         router.push('/login');

@@ -24,11 +24,11 @@ export default function Login() {
       password
     })
       .then(response => {
-        if (!response.data.auth) {
+        if (response.data.status !== 200) {
           throw new Error();
         }
 
-        setUser(response.data.data.user);
+        setUser({ ...response.data.data.user, cards: response.data.data.cards });
         setToken(response.data.data.token);
       })
       .catch(error => {

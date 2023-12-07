@@ -12,7 +12,7 @@ export default function Home() {
   useEffect(() => {
     server.get('/web/listProducts')
       .then(response => {
-        if (response.status !== 200) {
+        if (response.data.status !== 200) {
           throw new Error();
         }
 

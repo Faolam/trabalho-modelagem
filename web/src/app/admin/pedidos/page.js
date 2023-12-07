@@ -3,14 +3,29 @@
 import { pedidos } from '@/mock/pedidos';
 import style from './page.module.css';
 
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import { Header } from '@/ui/header';
 import { Modal } from '@/ui/modal';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { AuthContext } from '@/contexts/auth';
 
 export default function PedidosAdmin() {
   const [pedido, setPedido] = useState(null);
+  const router = useRouter();
+  const { user } = useContext(AuthContext);
+
+  useEffect(() => {
+    if (!user || user && user.permissionLevel != 1) {
+      router.push('/admin/login');
+      return;
+    }
+  }, []);
+
+  if (!user || user && user.permissionLevel != 1) {
+    return <></>;
+  }
 
   function getStatusPedido(pedido) {
     return !pedido.enviado ? '(Esperando envio)' : !pedido.entregue ? '(Pedido enviado)' : '(Pedido entregue)';
