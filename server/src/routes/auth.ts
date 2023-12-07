@@ -44,7 +44,7 @@ auth.get(`${api}/user/info`, ClientAuthentication.isAuthorized, async (req, res)
           phone: user.getValue("phone"),
           image: user.getValue("image"),
           isLocked: user.getValue("isLocked"),
-          permissionLevel: user.getValue("permissionLevel") == 1 ? "ADMINISTRADOR" : "CLIENTE",
+          permissionLevel: user.getValue("permissionLevel"),
           addressCountry: user.getValue("addressCountry"),
           addressCity: user.getValue("addressCity"),
           addressStreet: user.getValue("addressStreet"),
