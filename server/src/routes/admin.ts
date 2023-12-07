@@ -6,6 +6,7 @@ import { ClientAuthentication } from "./auth/clientAuthentication";
 import { Produto } from "../Entities/Produto";
 import { Admin } from "../Entities/Admin";
 import moment from "moment-timezone";
+import { Pedido } from "../Entities/Pedido";
 
 const admin = express.Router();
 const { api } = serverConfigs;
@@ -105,6 +106,22 @@ admin.post(`${api}/admin/updateProduct`, ClientAuthentication.isAuthorized, asyn
     await product.updateValue(req);
 
     return res.json({ status: 200, auth: true, data: null }).end()
+  }
+);
+
+admin.post(`${api}/admin/getAllPurchases`, ClientAuthentication.isAuthorized, async (req, res) => 
+  {
+    // Id do cliente que está acessando essa rota.
+    const id = parseInt((req as any).userId) as number;
+    const user = new User(id);
+    await user.initializeUser();
+
+    if (!user.existsUser()) return res.json({ status: 425, auth: false, data: null }).end();
+
+    if (user.getValue("permissionLevel") == 0) return res.json({ status: 431, auth: true, data: null }).end();
+
+    const purchases = await Pedido.getAllPedidosEveryBody();
+    return res.json({ status: 200, auth: true, data: purchases }).end()
   }
 );
 
