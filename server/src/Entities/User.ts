@@ -166,7 +166,7 @@ export class User {
    */
   public async insertCard(cardName: string, cardNumber: string, cardFlag: string, cardCVV: string, cardValidity: string): Promise<void> {
     try {
-      const existCard = await prisma.getSession().card.findFirst({where: {id: 0}});
+      const existCard = await prisma.getSession().card.findFirst({where: {userId: this.getValue("id")}});
 
       if (!existCard) {
         await prisma.getSession().card.create(
@@ -185,7 +185,7 @@ export class User {
         await prisma.getSession().card.update(
           {
             where: {
-              id: 0
+              id: existCard.id
             },
             data: {
               cardCVV: parseInt(cardCVV),

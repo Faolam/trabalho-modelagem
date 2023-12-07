@@ -34,7 +34,7 @@ import axios from "axios";
     }
   ); */
 
-  const newUser = await prisma.getSession().user.findMany({});
+  const newUser = await prisma.getSession().card.deleteMany({});
   /* const newUser = await prisma.getSession().batches.findMany({}); */
   /* const newUser = await prisma.getSession().user.create(
     {
